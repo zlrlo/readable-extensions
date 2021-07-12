@@ -1,5 +1,5 @@
 {
-  "name": "sample-readable",
+  "name": "Readable",
   "description": "Read and share anything readable in Readable!",
   "version": "1.0",
   "manifest_version": 3,
@@ -9,5 +9,8 @@
   "permissions": ["storage"],
   "action": {
     "default_popup": "index.html"
+  },
+  "icons": {
+    "128": "readable_logo.png"
   }
 }
