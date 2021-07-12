@@ -15,9 +15,7 @@ export function MainCard() {
           <div className="flex flex-wrap">
             <h1 className="flex-auto text-xl font-semibold">Readable</h1>
             <div className="text-xl font-semibold text-gray-500">Save</div>
-            <div className="w-full flex-none text-sm font-medium text-gray-500 mt-2">
-              chrome://extensions/
-            </div>
+            <div className="w-full flex-none text-sm font-medium text-gray-500 mt-2">chrome://extensions/</div>
           </div>
           {/* 카테고리 선택 영역 */}
           <div>
@@ -109,21 +107,11 @@ export function MainCard() {
           </div>
           {/* 해시태그 영역 */}
           <div className="flex space-x-2 mb-4 text-sm font-medium">
-            <div className="rounded-full py-1 px-2 bg-yellow-200 text-black text-xs">
-              #dev
-            </div>
-            <div className="rounded-full py-1 px-2 bg-purple-600 text-white text-xs">
-              #life
-            </div>
-            <div className="rounded-full py-1 px-2 bg-green-300 text-black text-xs">
-              #study
-            </div>
-            <div className="rounded-full py-1 px-2 bg-blue-600 text-white text-xs">
-              #blog
-            </div>
-            <div className="rounded-full py-1 px-2 bg-indigo-300 text-black text-xs">
-              #favorites
-            </div>
+            <div className="rounded-full py-1 px-2 bg-yellow-200 text-black text-xs">#dev</div>
+            <div className="rounded-full py-1 px-2 bg-purple-600 text-white text-xs">#life</div>
+            <div className="rounded-full py-1 px-2 bg-green-300 text-black text-xs">#study</div>
+            <div className="rounded-full py-1 px-2 bg-blue-600 text-white text-xs">#blog</div>
+            <div className="rounded-full py-1 px-2 bg-indigo-300 text-black text-xs">#favorites</div>
             {/* <div className="flex-auto flex space-x-3">
               <button
                 className="w-1/2 flex items-center justify-center rounded-md bg-black text-white"
