@@ -25,9 +25,6 @@ function HashTagInput() {
         <Chip backgroundColor="bg-green-300" fontColor="text-black">
           #study
         </Chip>
-        <Chip backgroundColor="bg-blue-600" fontColor="text-white">
-          #blog
-        </Chip>
         <Chip backgroundColor="bg-indigo-300" fontColor="text-black">
           #favorites
         </Chip>

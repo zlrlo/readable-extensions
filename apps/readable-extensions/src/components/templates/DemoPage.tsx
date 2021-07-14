@@ -9,14 +9,11 @@ export default function DemoPage() {
     <main>
       <div className="flex">
         <OpenGraphImage />
-        {/* 오른쪽 내용 영역 */}
-        <form className="flex-auto p-6 space-y-4">
+        <form className="flex-auto p-6 space-y-4 w-80">
           <Uncategorized />
           <CategorySelect />
           <HashTagInput />
-          {/* <p className="text-sm text-gray-500">
-            Free shipping on all continental US orders.
-          </p> */}
+          <p className="text-sm text-gray-500">https://readable-2021.vercel.app</p>
         </form>
       </div>
     </main>
