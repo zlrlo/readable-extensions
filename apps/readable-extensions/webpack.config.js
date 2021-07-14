@@ -14,6 +14,7 @@ module.exports = config => {
         patterns: [
           { from: './manifest.json', to: './' },
           { from: './background.js', to: './' },
+          { from: './content-script.js', to: './' },
           { from: './assets/images/readable_logo.png', to: './' },
         ],
       }),
