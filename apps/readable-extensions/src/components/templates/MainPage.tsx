@@ -4,6 +4,7 @@ import Connect from '@extensions/src/components/modules/Connect';
 import HashTagInput from '@extensions/src/components/modules/HashTagInput';
 import SiteInfo from '@extensions/src/components/modules/SiteInfo';
 import TextAreaAboveImage from '@extensions/src/components/modules/TextAreaAboveImage';
+import CategorySelect from '@extensions/src/components/modules/CategorySelect';
 
 type MetaData = {
   image: string;
@@ -20,22 +21,21 @@ const MainPage = () => {
 
   const [url, setUrl] = useState('');
 
-  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.greeting === 'og') {
-      setUrl(sender.tab.url);
-      setMetaData(request.metaData);
-      sendResponse({ farewell: 'goodbye' });
-    }
-  });
+  // chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  //   if (request.greeting === 'og') {
+  //     setUrl(sender.tab.url);
+  //     setMetaData(request.metaData);
+  //     sendResponse({ farewell: 'goodbye' });
+  //   }
+  // });
 
   useEffect(() => {
-    console.log('TCL: useEffect', useEffect);
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-      chrome.scripting.executeScript({
-        target: { tabId: tabs[0].id },
-        files: ['content-script.js'],
-      });
-    });
+    // chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+    //   chrome.scripting.executeScript({
+    //     target: { tabId: tabs[0].id },
+    //     files: ['content-script.js'],
+    //   });
+    // });
   }, []);
 
   return (
@@ -49,6 +49,7 @@ const MainPage = () => {
       </div>
 
       <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
+        <CategorySelect />
         <HashTagInput />
         <Connect />
       </div>
