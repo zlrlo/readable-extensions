@@ -1,12 +1,10 @@
+import React from 'react';
 import styled from 'styled-components';
 import 'tailwindcss/tailwind.css';
-import DemoPage2 from '@extensions/src/components/templates/DemoPage2';
+import MainPage from '@extensions/src/components/templates/mainPage';
 
-// import { ReactComponent as Logo } from './logo.svg';
-// import star from './star.svg';
-
-export function App() {
-  return <DemoPage2 />;
-}
+const App = () => {
+  return <MainPage />;
+};
 
 export default App;
