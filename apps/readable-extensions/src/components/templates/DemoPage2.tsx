@@ -58,10 +58,18 @@ const DemoPage2 = () => {
 
       <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
         {/* 이미지 아래 글씨 영역2 + 버튼 */}
-        <HashTagInput></HashTagInput>
-        <button type="button" className="bg-green-100 text-green-700 text-base font-semibold px-6 py-2 rounded-lg">
-          Save readable
-        </button>
+        <HashTagInput />
+        <div className="flex items-end">
+          <a href="" className="text-gray-400 hover:text-blue-600">
+            Go to the Readable
+          </a>
+          <button
+            type="button"
+            className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto"
+          >
+            Save readable
+          </button>
+        </div>
       </div>
 
       <div className="relative col-start-1 row-start-1">
