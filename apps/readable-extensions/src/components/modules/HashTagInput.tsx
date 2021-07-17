@@ -40,8 +40,8 @@ const HashTagInput = () => {
       <ul className="flex flex-wrap mb-4 text-sm font-medium">
         {hashTagList.map(({ id, hashTag }) => {
           return (
-            <li className="flex mr-2 mb-1">
-              <Chip key={id} backgroundColor="bg-yellow-200" fontColor="text-black">
+            <li key={id} className="flex mr-2 mb-1">
+              <Chip backgroundColor="bg-yellow-200" fontColor="text-black">
                 #{hashTag}
               </Chip>
               <button
