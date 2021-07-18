@@ -1,3 +1,4 @@
+import config from '@extensions/website-config';
 import React from 'react';
 
 type Props = {
@@ -9,7 +10,7 @@ const TextAreaAboveImage = (props: Props) => {
 
   return (
     <>
-      <p className="text-sm font-medium text-white">READABLE</p>
+      <p className="text-sm font-medium text-white">{config.title.toUpperCase()}</p>
       <h2 className="text-xl font-semibold text-white">{siteName}</h2>
     </>
   );

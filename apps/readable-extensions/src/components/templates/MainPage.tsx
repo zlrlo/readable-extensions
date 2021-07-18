@@ -5,6 +5,7 @@ import HashTagInput from '@extensions/src/components/modules/HashTagInput';
 import SiteInfo from '@extensions/src/components/modules/SiteInfo';
 import TextAreaAboveImage from '@extensions/src/components/modules/TextAreaAboveImage';
 import CategorySelect from '@extensions/src/components/modules/CategorySelect';
+import config from '@extensions/website-config';
 
 type MetaData = {
   image: string;
@@ -13,7 +14,7 @@ type MetaData = {
 
 const MainPage = () => {
   const defaultMetaData: MetaData = {
-    image: 'https://user-images.githubusercontent.com/68647194/125168170-056e3f80-e1df-11eb-8af8-de5395e38480.JPG',
+    image: config.coverImage,
     siteName: 'Site name',
   };
 

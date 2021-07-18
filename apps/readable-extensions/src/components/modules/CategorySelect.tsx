@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FolderOpenIcon, SelectorIcon, FolderIcon, CheckIcon } from '@heroicons/react/outline';
-import uuid from 'react-uuid';
 
 const CategorySelect = () => {
   const sample = [
