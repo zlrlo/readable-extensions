@@ -3,7 +3,7 @@ import React from 'react';
 const Connect = () => {
   return (
     <div className="flex items-end">
-      <a href="" className="text-gray-400 hover:text-blue-600">
+      <a href="https://readable-2021.vercel.app/" target="_blank" className="text-gray-400 hover:text-blue-600">
         Go to the Readable
       </a>
       <button
