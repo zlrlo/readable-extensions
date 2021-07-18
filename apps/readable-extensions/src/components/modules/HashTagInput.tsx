@@ -37,7 +37,7 @@ const HashTagInput = () => {
         />
       </div>
 
-      <ul className="flex flex-wrap mb-4 text-sm font-medium">
+      <ul className="flex flex-wrap mb-4 text-sm font-medium max-h-32 overflow-y-auto">
         {hashTagList.map(({ id, hashTag }) => {
           return (
             <li key={id} className="flex mr-2 mb-1">

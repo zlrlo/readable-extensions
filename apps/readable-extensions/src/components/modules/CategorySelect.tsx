@@ -40,7 +40,7 @@ const CategorySelect = () => {
       </button>
       {expanded && (
         <ul
-          className=" absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-sm ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none"
+          className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-28 rounded-md py-1 text-sm ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none"
           tabIndex={-1}
           role="listbox"
           aria-labelledby="listbox-label"
