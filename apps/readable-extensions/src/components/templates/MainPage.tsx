@@ -6,6 +6,7 @@ import SiteInfo from '@extensions/src/components/modules/SiteInfo';
 import TextAreaAboveImage from '@extensions/src/components/modules/TextAreaAboveImage';
 import CategorySelect from '@extensions/src/components/modules/CategorySelect';
 import config from '@extensions/website-config';
+import useFetch from './useFetch';
 
 type MetaData = {
   image: string;
@@ -21,6 +22,8 @@ const MainPage = () => {
   const [metaData, setMetaData] = useState(defaultMetaData);
 
   const [url, setUrl] = useState('');
+
+  const loading = useFetch({ data: { url: 'https://tailwindcss.com/' } });
 
   // chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   //   if (request.greeting === 'og') {
