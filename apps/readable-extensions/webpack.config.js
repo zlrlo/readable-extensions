@@ -1,5 +1,6 @@
 const nrwlConfig = require('@nrwl/react/plugins/webpack.js');
 const CopyPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 const webpackCommonConfig = require('../../webpack-common.config');
 
 module.exports = config => {
@@ -17,6 +18,9 @@ module.exports = config => {
           { from: './content-script.js', to: './' },
           { from: './assets/images/readable_logo.png', to: './' },
         ],
+      }),
+      new Dotenv({
+        path: './.env.local',
       }),
     ],
   };
