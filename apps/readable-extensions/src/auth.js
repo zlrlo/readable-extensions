@@ -1,6 +1,4 @@
 export const authSignin = () => {
-  console.log('TCL: authSignin -> authSignin', authSignin);
-
   chrome.identity.getAuthToken(
     {
       interactive: true,
