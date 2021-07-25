@@ -1,7 +1,17 @@
-/* eslint-disable no-undef */
-let color = '#3aa757';
-
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ color });
-  console.log('Default background color set to %cgreen', `color: ${color}`);
-});
+chrome.identity.getAuthToken(
+  {
+    interactive: true,
+  },
+  function (token) {
+    if (chrome.runtime.lastError) {
+      alert(chrome.runtime.lastError.message);
+      return;
+    }
+    var x = new XMLHttpRequest();
+    x.open('GET', 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + token);
+    x.onload = function () {
+      alert(x.response);
+    };
+    x.send();
+  }
+);
