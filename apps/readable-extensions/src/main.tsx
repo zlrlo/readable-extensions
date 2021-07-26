@@ -1,11 +1,16 @@
-import { StrictMode } from 'react';
+import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom';
 
 import App from './pages';
+import Login from './pages/login';
 
-ReactDOM.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-  document.getElementById('root')
-);
+console.log('[+] 🚀 redable-extensions from foreground.');
+
+chrome.storage.local.get('authToken', function (data) {
+  const { authToken } = data;
+
+  ReactDOM.render(
+    <StrictMode>{authToken ? <App {...data} /> : <Login />}</StrictMode>,
+    document.getElementById('root')
+  );
+});
