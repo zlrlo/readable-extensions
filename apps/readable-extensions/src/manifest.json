@@ -16,6 +16,6 @@
     "client_id": "87250999771-fpo196r946h5fl8guqlbqb871ov554r5.apps.googleusercontent.com",
     "scopes": ["https://www.googleapis.com/auth/contacts.readonly", "https://www.googleapis.com/auth/userinfo.email"]
   },
-  "permissions": ["identity"],
+  "permissions": ["identity", "storage"],
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzoZve/tfNyOSVVrS1oteHxRYTWHdKD355QUVSpjv6b2C1f1zkiC3c5SMAccXeU5WEIIpk0q26VMxDOlz7tMcStddSpem9kEe30X0Bq4TRpDFc619ZMOHpmbATsV4RgO0h6a/fu0p0q1CCCGzsX9+TnRVrTvAKiS/WCdw0bPx33wuw+qnrkkH2FZIotmerdFGIKmeETXY3QkEkAaqSXkjy3yAS54bX55zcrd6nAeHCoU6+y+dGU9zQydNTNj+/Jgojff2kTMrbVEbdb7ENzgk7jY2EjO4e9BvvP7DH6s6P01zWAVTKGT1kn1h9U67rWwVt5EYa2qX+iGQwyhWjZMqNQIDAQAB"
 }

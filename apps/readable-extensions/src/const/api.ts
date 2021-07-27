@@ -1,4 +1,4 @@
-const SERVER_HOST = process.env.SERVER_HOST;
+const SERVER_HOST = process.env.NX_SERVER_HOST;
 
 export const API_REST_BASE = `${SERVER_HOST}/rest`;
 
