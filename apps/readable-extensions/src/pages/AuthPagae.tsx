@@ -2,9 +2,7 @@ import React from 'react';
 import 'tailwindcss/tailwind.css';
 import MainPage from '@extensions/src/components/templates/MainPage';
 
-const App = ({ authToken }) => {
-  console.log('TCL: App -> authToken', authToken);
-
+const AuthPage = ({ authToken }) => {
   return (
     <div className="grid grid-cols-1 w-80">
       <MainPage />
@@ -12,4 +10,4 @@ const App = ({ authToken }) => {
   );
 };
 
-export default App;
+export default AuthPage;

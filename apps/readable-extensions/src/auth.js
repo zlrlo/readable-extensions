@@ -14,11 +14,8 @@ export const authSignin = () => {
       fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`)
         .then(response => response.json())
         .then(response => {
-          console.log(response);
-          alert(JSON.stringify(response));
-
           (async () => {
-            const rawResponse = await fetch('http://localhost:7000/rest/auth/signin', {
+            const rawResponse = await fetch(`https://readable-2021.herokuapp.com/rest/auth/signin`, {
               method: 'POST',
               headers: {
                 Accept: 'application/json',
@@ -26,17 +23,16 @@ export const authSignin = () => {
               },
               body: JSON.stringify({ signinInput: response }),
             });
+
             const content = await rawResponse.json();
-
             const { token } = content;
-
-            console.log(content);
-            alert(JSON.stringify(content));
 
             if (token) {
               chrome.storage.local.set({
                 authToken: token,
               });
+
+              alert('Login successful! Please click readable icon again!');
             }
           })();
         });
