@@ -13,7 +13,7 @@ type MetaData = {
   siteName: string;
 };
 
-const MainPage = () => {
+const MainPage = ({ authToken }) => {
   const defaultMetaData: MetaData = {
     image: config.coverImage,
     siteName: 'Site name',
@@ -55,7 +55,7 @@ const MainPage = () => {
       <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
         <CategorySelect />
         <HashTagInput />
-        <Connect />
+        <Connect authToken={authToken} />
       </div>
 
       <div className="relative col-start-1 row-start-1">

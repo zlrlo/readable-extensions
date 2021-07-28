@@ -1,13 +1,24 @@
+import { URL_SAVE_BOOKMARK } from '@extensions/src/const/api';
 import config from '@extensions/website-config';
-import React from 'react';
+import React, { useState } from 'react';
 
-const Connect = () => {
+const Connect = ({ authToken }) => {
   const onClick = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const url = tabs[0].url;
 
-      // TODO(Teddy): WIP
-      console.log('TCL: onClick -> url', url);
+      (async () => {
+        const rawResponse = await fetch(URL_SAVE_BOOKMARK, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: JSON.stringify({ url }),
+        });
+        const content = await rawResponse.json();
+      })();
     });
   };
 
