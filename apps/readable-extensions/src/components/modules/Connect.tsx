@@ -32,7 +32,7 @@ const Connect = ({ authToken }) => {
         className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto"
         onClick={onClick}
       >
-        Save readable
+        Readable it
       </button>
     </div>
   );

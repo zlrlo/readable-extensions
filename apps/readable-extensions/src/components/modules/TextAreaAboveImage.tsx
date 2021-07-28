@@ -1,16 +1,17 @@
 import config from '@extensions/website-config';
 import React from 'react';
+import { UrlInfo } from '../templates/MainPage';
 
 type Props = {
-  siteName: string;
+  urlInfo: UrlInfo;
 };
 
-const TextAreaAboveImage = (props: Props) => {
-  const { siteName } = props;
+const TextAreaAboveImage = ({ urlInfo }: Props) => {
+  const { type, siteName } = urlInfo;
 
   return (
     <>
-      <p className="text-sm font-medium text-white">{config.title.toUpperCase()}</p>
+      <p className="text-sm font-medium text-white">{type}</p>
       <h2 className="text-xl font-semibold text-white">{siteName}</h2>
     </>
   );
