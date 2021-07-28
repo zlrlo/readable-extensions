@@ -1,4 +1,4 @@
-// const axios = require('axios');
+import { API_REST_BASE } from './const/api';
 
 export const authSignin = () => {
   chrome.identity.getAuthToken(
@@ -15,7 +15,7 @@ export const authSignin = () => {
         .then(response => response.json())
         .then(response => {
           (async () => {
-            const rawResponse = await fetch(`https://readable-2021.herokuapp.com/rest/auth/signin`, {
+            const rawResponse = await fetch(`${API_REST_BASE}/auth/signin`, {
               method: 'POST',
               headers: {
                 Accept: 'application/json',
