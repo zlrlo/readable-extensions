@@ -21,7 +21,14 @@ export const authSignin = () => {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ signinInput: response }),
+              body: JSON.stringify({
+                signinInput: {
+                  provider: 'Google',
+                  providerId: response.id,
+                  email: response.email,
+                  avatarUrl: response.picture,
+                },
+              }),
             });
 
             const content = await rawResponse.json();
