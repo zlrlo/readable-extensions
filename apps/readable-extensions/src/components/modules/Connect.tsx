@@ -25,14 +25,16 @@ const Connect = ({ authToken }) => {
                 if (error) {
                   alert(error.message);
                 } else {
-                  alert('Please login again.')
+                  alert('Please login again.');
                 }
-              })
+              });
             }
+            // normal case
+            window.close();
           })
           .catch(error => {
             console.log(error);
-          })
+          });
       })();
     });
   };

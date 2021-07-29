@@ -39,6 +39,7 @@ export const authSignin = () => {
                 authToken: token,
               });
 
+              window.close();
               alert('Login successful! Please click readable icon again!');
             }
           })();
