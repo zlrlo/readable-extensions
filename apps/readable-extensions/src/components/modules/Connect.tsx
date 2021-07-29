@@ -8,7 +8,7 @@ const Connect = ({ authToken }) => {
       const url = tabs[0].url;
 
       (async () => {
-        const rawResponse = await fetch(URL_SAVE_BOOKMARK, {
+        fetch(URL_SAVE_BOOKMARK, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -16,8 +16,23 @@ const Connect = ({ authToken }) => {
             Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({ url }),
-        });
-        const content = await rawResponse.json();
+        })
+          .then(response => {
+            // Unauthorizaed
+            if (response.status === 401) {
+              chrome.storage.local.remove('authToken', function () {
+                const error = chrome.runtime.lastError;
+                if (error) {
+                  alert(error.message);
+                } else {
+                  alert('Please login again.')
+                }
+              })
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          })
       })();
     });
   };
@@ -32,7 +47,7 @@ const Connect = ({ authToken }) => {
         className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto"
         onClick={onClick}
       >
-        Save readable
+        Readable it
       </button>
     </div>
   );
