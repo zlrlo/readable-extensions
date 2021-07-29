@@ -1,1 +1,1 @@
-console.log('[+] 🚀 redable-extensions from background.');
+console.log('[+] 🚀 redable-extensions from background.')
