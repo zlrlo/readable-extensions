@@ -48,6 +48,8 @@ const MainPage = ({ authToken }) => {
         console.log('TCL: MainPage -> content', JSON.stringify(content, null, 2));
 
         if (content) {
+          setLoaded(true);
+
           const { siteName, title, type, imageUrl, url, howMany } = content;
           const {
             siteName: siteNameDefault,
@@ -66,7 +68,6 @@ const MainPage = ({ authToken }) => {
             url: url ?? urlDefault,
             howMany: howMany ?? howManyDefault,
           });
-          setLoaded(true);
         }
       }
     })();
