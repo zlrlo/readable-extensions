@@ -9,6 +9,7 @@ const LottiePlayer = (props: Props) => {
     <Player
       autoplay
       loop
+      // TODO(Teddy): Change to use local json
       src="https://assets9.lottiefiles.com/datafiles/SkdS7QDyJTKTdwA/data.json"
       style={{ height: '200px', width: '200px' }}
     />

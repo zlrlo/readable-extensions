@@ -2,7 +2,7 @@ import { URL_SAVE_BOOKMARK } from '@extensions/src/const/api';
 import config from '@extensions/website-config';
 import React, { useState } from 'react';
 
-const Connect = ({ authToken }) => {
+const Connect = ({ authToken, loaded }) => {
   const onClick = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const url = tabs[0].url;
@@ -46,8 +46,9 @@ const Connect = ({ authToken }) => {
       </a>
       <button
         type="button"
-        className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto"
+        className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto disabled:opacity-50"
         onClick={onClick}
+        disabled={!loaded}
       >
         Readable it
       </button>

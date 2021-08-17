@@ -90,7 +90,7 @@ const MainPage = ({ authToken }) => {
       <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
         <CategorySelect />
         <HashTagInput />
-        <Connect authToken={authToken} />
+        <Connect authToken={authToken} loaded={loaded} />
       </div>
 
       <div className="relative col-start-1 row-start-1">
