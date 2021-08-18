@@ -7,6 +7,7 @@ import TextAreaAboveImage from '@extensions/src/components/modules/TextAreaAbove
 import CategorySelect from '@extensions/src/components/modules/CategorySelect';
 import config from '@extensions/website-config';
 import { GET_URL_INFO } from '@extensions/src/const/api';
+import LottiePlayer from '../elements/LottiePlayer';
 
 export type UrlInfo = {
   url: string;
@@ -27,6 +28,7 @@ const MainPage = ({ authToken }) => {
     howMany: 0,
   };
 
+  const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [urlInfo, setUrlInfo] = useState<UrlInfo>(defaultUrlInfo);
 
@@ -35,6 +37,7 @@ const MainPage = ({ authToken }) => {
 
     (async () => {
       if (!loaded) {
+        setLoading(true);
         const rawResponse = await fetch(GET_URL_INFO, {
           method: 'POST',
           headers: {
@@ -68,6 +71,7 @@ const MainPage = ({ authToken }) => {
             url: url ?? urlDefault,
             howMany: howMany ?? howManyDefault,
           });
+          setLoading(false);
         }
       }
     })();
@@ -86,11 +90,11 @@ const MainPage = ({ authToken }) => {
       <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
         <CategorySelect />
         <HashTagInput />
-        <Connect authToken={authToken} />
+        <Connect authToken={authToken} loaded={loaded} />
       </div>
 
       <div className="relative col-start-1 row-start-1">
-        <OpenGraphImage src={urlInfo.imageUrl}></OpenGraphImage>
+        {loading ? <LottiePlayer /> : <OpenGraphImage src={urlInfo.imageUrl}></OpenGraphImage>}
       </div>
     </div>
   );
