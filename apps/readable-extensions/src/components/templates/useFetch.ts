@@ -1,44 +1,51 @@
-import { URL_SAVE_BOOKMARK } from '@extensions/src/const/api';
 import { useEffect, useState } from 'react';
 
-type Data = {
-  url: string;
-};
+export enum UseFetchMethod {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
 
 type Props = {
-  data: Data;
+  url: string;
+  method: UseFetchMethod;
+  token?: string;
+  body?: any;
 };
 
-const useFetch = (props: Props) => {
-  console.log('TCL: URL_SAVE_BOOKMARK', URL_SAVE_BOOKMARK);
-  const { data } = props;
-
+const useFetch = ({ url, method, token, body }: Props) => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const getMetaData = () => {
+  useEffect(() => {
     setLoading(true);
 
-    fetch(`${URL_SAVE_BOOKMARK}`, {
-      method: 'POST',
+    fetch(url, {
+      method,
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(body),
     })
       .then(function (response) {
         return response.json();
       })
       .then(function (myJson) {
         console.log(JSON.stringify(myJson));
+        setData(myJson);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        setError(true);
         setLoading(false);
       });
-  };
+  }, [url, method, token, body]);
 
-  useEffect(() => {
-    getMetaData();
-  }, []);
-
-  return loading;
+  return { data, loading, error };
 };
 
 export default useFetch;

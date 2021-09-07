@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { FolderOpenIcon, SelectorIcon, FolderIcon, CheckIcon } from '@heroicons/react/outline';
 import { REST_API } from '@extensions/src/const/api';
-import useMyInterests from './useMyInterests';
+import useFetch, { UseFetchMethod } from '../../templates/useFetch';
 
-const Interests = ({ authToken }) => {
-  const sample = [
-    { id: '1', interest: 'Life' },
-    { id: '2', interest: 'Game' },
-    { id: '3', interest: 'Readable' },
-    { id: '4', interest: 'Study' },
-  ];
-  const interests2 = useMyInterests(authToken);
-  console.log('TCL: Interests -> interests2', interests2);
+const Interests = ({ authToken }: { authToken: string }) => {
+  const { data, loading, error } = useFetch({
+    url: REST_API.interests.myInterests,
+    method: UseFetchMethod.GET,
+    token: authToken,
+  });
 
-  const interests = sample;
+  const defaultInterest = [{ id: '0', interest: 'Readable' }];
+  const interests = data?.length ? [...defaultInterest, ...data] : defaultInterest;
+
   const [selectedInterest, setSelectedInterest] = useState(interests[0]);
   const [expanded, setExpanded] = useState(false);
 
-  const handleCategoryListBoxClick = () => {
+  const handleInterestListBoxClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleCategoryListClick = ({ id, interest }) => {
+  const handleInterestListClick = ({ id, interest }) => {
     setSelectedInterest({ id, interest });
   };
 
@@ -32,7 +31,7 @@ const Interests = ({ authToken }) => {
         className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
         aria-haspopup="listbox"
         aria-labelledby="listbox-label"
-        onClick={handleCategoryListBoxClick}
+        onClick={handleInterestListBoxClick}
       >
         <span className="flex items-center">
           <FolderOpenIcon className="w-5 h-5" />
@@ -62,7 +61,8 @@ const Interests = ({ authToken }) => {
                 id="listbox-option-0"
                 role="option"
                 onClick={() => {
-                  handleCategoryListClick({ id, interest });
+                  handleInterestListClick({ id, interest });
+                  setExpanded(!expanded);
                 }}
               >
                 <div className="flex items-center ">
