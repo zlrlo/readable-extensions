@@ -5,7 +5,7 @@ import useFetch, { UseFetchMethod } from '../../templates/useFetch';
 
 const Interests = ({ authToken }: { authToken: string }) => {
   const { data, loading, error } = useFetch({
-    url: REST_API.interests.myInterests,
+    url: REST_API.interests.my,
     method: UseFetchMethod.GET,
     token: authToken,
   });
