@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FolderOpenIcon, SelectorIcon, FolderIcon, CheckIcon } from '@heroicons/react/outline';
+import { REST_API } from '@extensions/src/const/api';
+import useMyInterests from './useMyInterests';
 
-const CategorySelect = () => {
+const Interests = ({ authToken }) => {
   const sample = [
-    { id: '1', category: 'Life' },
-    { id: '2', category: 'Game' },
-    { id: '3', category: 'Readable' },
-    { id: '4', category: 'Study' },
+    { id: '1', interest: 'Life' },
+    { id: '2', interest: 'Game' },
+    { id: '3', interest: 'Readable' },
+    { id: '4', interest: 'Study' },
   ];
-  const categoryList = sample;
+  const interests = sample;
 
-  const [selectedCategory, setSelectedCategory] = useState(categoryList[0]);
+  const [selectedInterest, setSelectedInterest] = useState(interests[0]);
   const [expanded, setExpanded] = useState(false);
 
   const handleCategoryListBoxClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleCategoryListClick = ({ id, category }) => {
-    setSelectedCategory({ id, category });
+  const handleCategoryListClick = ({ id, interest }) => {
+    setSelectedInterest({ id, interest });
   };
 
   return (
@@ -32,7 +34,7 @@ const CategorySelect = () => {
       >
         <span className="flex items-center">
           <FolderOpenIcon className="w-5 h-5" />
-          <span className="ml-3 block truncate">{selectedCategory.category}</span>
+          <span className="ml-3 block truncate">{selectedInterest.interest}</span>
         </span>
         <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
           <SelectorIcon className="w-5 h-5" />
@@ -46,8 +48,8 @@ const CategorySelect = () => {
           aria-labelledby="listbox-label"
           aria-activedescendant="listbox-option-3"
         >
-          {categoryList.map(({ id, category }) => {
-            const isSelected = selectedCategory.id === id ? true : false;
+          {interests.map(({ id, interest }) => {
+            const isSelected = selectedInterest.id === id ? true : false;
 
             return (
               <li
@@ -58,13 +60,13 @@ const CategorySelect = () => {
                 id="listbox-option-0"
                 role="option"
                 onClick={() => {
-                  handleCategoryListClick({ id, category });
+                  handleCategoryListClick({ id, interest });
                 }}
               >
                 <div className="flex items-center ">
                   <FolderIcon className="w-5 h-5" />
 
-                  <span className="font-normal ml-3 block truncate">{category}</span>
+                  <span className="font-normal ml-3 block truncate">{interest}</span>
                 </div>
                 <span className="absolute inset-y-0 right-0 items-center pr-4 flex">
                   <CheckIcon className={`w-5 h-5 text-indigo-600 ${isSelected ? 'opacity-100' : 'opacity-0'}`} />
@@ -78,4 +80,4 @@ const CategorySelect = () => {
   );
 };
 
-export default CategorySelect;
+export default Interests;
