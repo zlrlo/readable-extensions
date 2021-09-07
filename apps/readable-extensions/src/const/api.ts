@@ -11,6 +11,6 @@ export const REST_API = {
     getUrlInfo: `${API_REST_BASE}/bookmarks`,
   },
   interests: {
-    myInterests: `${API_REST_BASE}/myInterests`,
+    myInterests: `${API_REST_BASE}/interests/my`,
   },
 };

@@ -10,8 +10,10 @@ const Interests = ({ authToken }) => {
     { id: '3', interest: 'Readable' },
     { id: '4', interest: 'Study' },
   ];
-  const interests = sample;
+  const interests2 = useMyInterests(authToken);
+  console.log('TCL: Interests -> interests2', interests2);
 
+  const interests = sample;
   const [selectedInterest, setSelectedInterest] = useState(interests[0]);
   const [expanded, setExpanded] = useState(false);
 

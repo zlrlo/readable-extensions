@@ -10,11 +10,11 @@ type Props = {
   authToken: string;
 };
 
-const useMyInterests = ({ authToken }: Props) => {
+const useMyInterests = (authToken: string) => {
   const [loading, setLoading] = useState(false);
   const [interests, setInterests] = useState<InterestData[]>([]);
 
-  const getMyInterests = async () => {
+  const getMyInterests = () => {
     setLoading(true);
 
     fetch(`${REST_API.interests.myInterests}`, {
@@ -26,6 +26,7 @@ const useMyInterests = ({ authToken }: Props) => {
       },
     })
       .then(function (response) {
+        console.log('TCL: useMyInterests -> response', response);
         return response.json();
       })
       .then(function (json) {
@@ -36,7 +37,7 @@ const useMyInterests = ({ authToken }: Props) => {
 
   useEffect(() => {
     getMyInterests();
-  });
+  }, []);
 
   return interests;
 };
