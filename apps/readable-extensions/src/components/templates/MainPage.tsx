@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import OpenGraphImage from '@extensions/src/components/elements/OpenGraphImage';
 import Connect from '@extensions/src/components/modules/Connect';
 import HashTagInput from '@extensions/src/components/modules/HashTagInput';
-import SiteInfo from '@extensions/src/components/modules/SiteInfo';
+import UrlInfo from '@extensions/src/components/modules/SiteInfo';
 import TextAreaAboveImage from '@extensions/src/components/modules/TextAreaAboveImage';
-import CategorySelect from '@extensions/src/components/modules/CategorySelect';
 import config from '@extensions/website-config';
-import { GET_URL_INFO } from '@extensions/src/const/api';
+import { REST_API } from '@extensions/src/const/api';
 import LottiePlayer from '../elements/LottiePlayer';
+import Interests from '@extensions/src/components/modules/interests';
 
 export type UrlInfo = {
   url: string;
@@ -38,7 +38,7 @@ const MainPage = ({ authToken }) => {
     (async () => {
       if (!loaded) {
         setLoading(true);
-        const rawResponse = await fetch(GET_URL_INFO, {
+        const rawResponse = await fetch(REST_API.bookmarks.getUrlInfo, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -84,11 +84,11 @@ const MainPage = ({ authToken }) => {
       </div>
 
       <div className="col-start-1 row-start-2 px-4">
-        <SiteInfo urlInfo={urlInfo} />
+        <UrlInfo urlInfo={urlInfo} />
       </div>
 
       <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
-        <CategorySelect />
+        <Interests authToken={authToken} />
         <HashTagInput />
         <Connect authToken={authToken} loaded={loaded} />
       </div>

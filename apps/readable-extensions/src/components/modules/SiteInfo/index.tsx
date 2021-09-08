@@ -1,6 +1,6 @@
 import { BookmarkIcon } from '@heroicons/react/solid';
 import React from 'react';
-import { UrlInfo } from '../templates/MainPage';
+import { UrlInfo } from '../../templates/MainPage';
 
 type Props = {
   urlInfo: UrlInfo;

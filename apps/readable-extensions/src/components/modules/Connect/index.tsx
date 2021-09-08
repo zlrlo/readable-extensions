@@ -1,4 +1,4 @@
-import { URL_SAVE_BOOKMARK } from '@extensions/src/const/api';
+import { REST_API } from '@extensions/src/const/api';
 import config from '@extensions/website-config';
 import React, { useState } from 'react';
 
@@ -8,7 +8,7 @@ const Connect = ({ authToken, loaded }) => {
       const url = tabs[0].url;
 
       (async () => {
-        fetch(URL_SAVE_BOOKMARK, {
+        fetch(REST_API.bookmarks.add, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
