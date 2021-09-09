@@ -20,7 +20,6 @@ const HashTagInput = () => {
 
   const deleteHashTag = hashTagId => {
     const filtered = hashTagList.filter(({ id }) => id !== hashTagId);
-    console.log('TCL: HashTagInput -> filtered', filtered);
     setHashTagList(filtered);
   };
 

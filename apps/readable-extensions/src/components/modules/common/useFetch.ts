@@ -1,3 +1,4 @@
+import { useAuthState } from '@extensions/src/store/RootProvider';
 import { useEffect, useState } from 'react';
 
 export enum UseFetchMethod {
@@ -10,11 +11,12 @@ export enum UseFetchMethod {
 type Props = {
   url: string;
   method: UseFetchMethod;
-  token?: string;
   body?: any;
 };
 
-const useFetch = ({ url, method, token, body }: Props) => {
+const useFetch = ({ url, method, body }: Props) => {
+  const { auth } = useAuthState();
+
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -27,7 +29,7 @@ const useFetch = ({ url, method, token, body }: Props) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${auth.token}`,
       },
       body: JSON.stringify(body),
     })
@@ -43,7 +45,7 @@ const useFetch = ({ url, method, token, body }: Props) => {
         setError(true);
         setLoading(false);
       });
-  }, [url, method, token, body]);
+  }, [auth.token, body, method, url]);
 
   return { data, loading, error };
 };
