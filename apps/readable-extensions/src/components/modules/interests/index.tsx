@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { FolderOpenIcon, SelectorIcon, FolderIcon, CheckIcon } from '@heroicons/react/outline';
 import { REST_API } from '@extensions/src/const/api';
 import useFetch, { UseFetchMethod } from '../../templates/useFetch';
+import { InterestInfo, TagInfo } from '../../templates/MainPage';
 
-const Interests = ({ authToken }: { authToken: string }) => {
+type Props = {
+  authToken: string;
+  setSelectedInterestForSending: Dispatch<SetStateAction<InterestInfo>>;
+  setSelectedTagsForSending: Dispatch<SetStateAction<TagInfo[]>>;
+};
+
+const Interests = ({ authToken, setSelectedInterestForSending, setSelectedTagsForSending }: Props) => {
   const { data, loading, error } = useFetch({
     url: REST_API.interests.my,
     method: UseFetchMethod.GET,
@@ -11,7 +18,7 @@ const Interests = ({ authToken }: { authToken: string }) => {
   });
 
   const defaultInterest = [{ id: '0', interest: 'Readable' }];
-  const interests = data?.length ? [...defaultInterest, ...data] : defaultInterest;
+  const interests = data?.length ? data : defaultInterest;
 
   const [selectedInterest, setSelectedInterest] = useState(interests[0]);
   const [expanded, setExpanded] = useState(false);
@@ -22,6 +29,7 @@ const Interests = ({ authToken }: { authToken: string }) => {
 
   const handleInterestListClick = ({ id, interest }) => {
     setSelectedInterest({ id, interest });
+    setSelectedInterestForSending({ id, interest });
   };
 
   return (

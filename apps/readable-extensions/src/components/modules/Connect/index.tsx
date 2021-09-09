@@ -1,8 +1,18 @@
 import { REST_API } from '@extensions/src/const/api';
 import config from '@extensions/website-config';
-import React, { useState } from 'react';
+import React from 'react';
+import { InterestInfo, TagInfo } from '../../templates/MainPage';
 
-const Connect = ({ authToken, loaded }) => {
+type Props = {
+  authToken: string;
+  loaded: boolean;
+  selectedInterestForSending: InterestInfo;
+  selectedTagsForSending: TagInfo[];
+};
+
+const Connect = ({ authToken, loaded, selectedInterestForSending, selectedTagsForSending }: Props) => {
+  const enabled = loaded && selectedInterestForSending;
+
   const onClick = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const url = tabs[0].url;
@@ -15,7 +25,11 @@ const Connect = ({ authToken, loaded }) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${authToken}`,
           },
-          body: JSON.stringify({ url }),
+          body: JSON.stringify({
+            url,
+            interestId: selectedInterestForSending?.id,
+            tags: (selectedTagsForSending ?? []).map(tag => tag.id),
+          }),
         })
           .then(response => {
             // Unauthorizaed
@@ -48,7 +62,7 @@ const Connect = ({ authToken, loaded }) => {
         type="button"
         className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto disabled:opacity-50"
         onClick={onClick}
-        disabled={!loaded}
+        disabled={!enabled}
       >
         Readable it
       </button>

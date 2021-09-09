@@ -18,6 +18,16 @@ export type UrlInfo = {
   howMany: number;
 };
 
+export type TagInfo = {
+  id: string;
+  tag: string;
+};
+
+export type InterestInfo = {
+  id: string;
+  interest: string;
+};
+
 const MainPage = ({ authToken }) => {
   const defaultUrlInfo: UrlInfo = {
     url: '',
@@ -31,6 +41,9 @@ const MainPage = ({ authToken }) => {
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [urlInfo, setUrlInfo] = useState<UrlInfo>(defaultUrlInfo);
+
+  const [selectedInterestForSending, setSelectedInterestForSending] = useState<InterestInfo>();
+  const [selectedTagsForSending, setSelectedTagsForSending] = useState<TagInfo[]>([]);
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const url = tabs[0].url;
@@ -88,9 +101,18 @@ const MainPage = ({ authToken }) => {
       </div>
 
       <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
-        <Interests authToken={authToken} />
+        <Interests
+          authToken={authToken}
+          setSelectedInterestForSending={setSelectedInterestForSending}
+          setSelectedTagsForSending={setSelectedTagsForSending}
+        />
         <HashTagInput />
-        <Connect authToken={authToken} loaded={loaded} />
+        <Connect
+          authToken={authToken}
+          loaded={loaded}
+          selectedInterestForSending={selectedInterestForSending}
+          selectedTagsForSending={selectedTagsForSending}
+        />
       </div>
 
       <div className="relative col-start-1 row-start-1">
