@@ -1,8 +1,9 @@
 import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom';
 import { SERVER_HOST } from './const/api';
-import AuthPage from './pages/AuthPagae';
+import AuthPage from './pages/AuthPage';
 import LoginPage from './pages/LoginPage';
+import 'tailwindcss/tailwind.css';
 
 console.log(`[+] 🚀 redable-extensions from foreground with ${SERVER_HOST}`);
 
