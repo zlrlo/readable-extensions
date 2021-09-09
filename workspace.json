@@ -12,7 +12,7 @@
           "options": {
             "outputPath": "dist/apps/readable-extensions",
             "index": "apps/readable-extensions/src/index.html",
-            "main": "apps/readable-extensions/src/main.tsx",
+            "main": "apps/readable-extensions/src/index.tsx",
             "polyfills": "apps/readable-extensions/src/polyfills.ts",
             "tsConfig": "apps/readable-extensions/tsconfig.app.json",
             "assets": ["apps/readable-extensions/src/assets"],
@@ -61,9 +61,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/readable-extensions/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/readable-extensions/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
