@@ -1,5 +1,5 @@
 import React from 'react';
-import { SocialLoginButton } from '../elements/SocialLoginButton';
+import { SocialLoginButton } from '../ui/SocialLoginButton';
 
 const LoginPage = () => {
   return <SocialLoginButton provider="google" />;

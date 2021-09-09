@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import OpenGraphImage from '@extensions/src/components/elements/OpenGraphImage';
+import OpenGraphImage from '@extensions/src/components/ui/OpenGraphImage';
 import Connect from '@extensions/src/components/modules/Connect';
 import HashTagInput from '@extensions/src/components/modules/HashTagInput';
 import UrlInfo from '@extensions/src/components/modules/SiteInfo';
 import TextAreaAboveImage from '@extensions/src/components/modules/TextAreaAboveImage';
 import config from '@extensions/website-config';
 import { REST_API } from '@extensions/src/const/api';
-import LottiePlayer from '../elements/LottiePlayer';
+import LottiePlayer from '../ui/LottiePlayer';
 import Interests from '@extensions/src/components/modules/interests';
 
 export type UrlInfo = {

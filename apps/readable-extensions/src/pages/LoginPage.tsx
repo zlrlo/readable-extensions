@@ -1,6 +1,6 @@
 import React from 'react';
 import 'tailwindcss/tailwind.css';
-import { SocialLoginButton } from '../components/elements/SocialLoginButton';
+import { SocialLoginButton } from '../components/ui/SocialLoginButton';
 
 const LoginPage = () => {
   return (

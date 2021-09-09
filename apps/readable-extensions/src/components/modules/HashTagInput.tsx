@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Chip from '@extensions/src/components/elements/Chip';
+import Chip from '@extensions/src/components/ui/Chip';
 import { HashtagIcon, BackspaceIcon } from '@heroicons/react/solid';
 import uuid from 'react-uuid';
 
