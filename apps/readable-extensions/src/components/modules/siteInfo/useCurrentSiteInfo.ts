@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { REST_API } from '@extensions/src/const/api';
-import { useAuthState } from '@extensions/src/store/RootProvider';
+import { REST_API } from '@extensions/const/api';
+import { useAuthState } from '@extensions/store/RootProvider';
 
 type UrlInfo = {
   url: string;

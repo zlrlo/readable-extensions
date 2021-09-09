@@ -9,6 +9,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     case 'LOGIN':
       return { ...state, token: action.token };
 
+    // TODO(zlrlo): Logout 기능 미완성
     case 'LOGOUT':
       return { ...state };
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import useCurrentSiteInfo from '../components/modules/siteInfo/useCurrentSiteInfo';
-import LottiePlayer from '../components/ui/LottiePlayer';
-import TextAreaAboveImage from '@extensions/src/components/ui/TextAreaAboveImage';
-import UrlInfo from '@extensions/src/components/ui/SiteInfo';
-import Interests from '@extensions/src/components/modules/Interests/Interests';
-import HashTagInput from '@extensions/src/components/ui/HashTagInput';
-import config from '@extensions/src/const/website-config';
-import useSubmit from '@extensions/src/components/modules/submit/useSubmit';
-import OpenGraphImage from '@extensions/src/components/ui/OpenGraphImage';
+import useCurrentSiteInfo from '@extensions/components/modules/siteInfo/useCurrentSiteInfo';
+import LottiePlayer from '@extensions/components/ui/LottiePlayer';
+import TextAreaAboveImage from '@extensions/components/ui/TextAreaAboveImage';
+import UrlInfo from '@extensions/components/ui/SiteInfo';
+import Interests from '@extensions/components/modules/Interests/Interests';
+import HashTagInput from '@extensions/components/ui/HashTagInput';
+import config from '@extensions/const/website-config';
+import useSubmit from '@extensions/components/modules/submit/useSubmit';
+import OpenGraphImage from '@extensions/components/ui/OpenGraphImage';
 
 const MainPage = () => {
   const { currentSiteInfo, isCurrentSiteInfoLoading } = useCurrentSiteInfo();

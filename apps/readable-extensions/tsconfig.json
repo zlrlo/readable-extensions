@@ -12,10 +12,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "paths": {
-      "@extensions": ["apps/readable-extensions"],
-      "@extensions/*": ["apps/readable-extensions/*"],
-      "@extensions/src": ["apps/readable-extensions/src"],
-      "@extensions/src/*": ["apps/readable-extensions/src/*"]
+      "@extensions": ["apps/readable-extensions/src"],
+      "@extensions/*": ["apps/readable-extensions/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts", "custom.d.ts"],

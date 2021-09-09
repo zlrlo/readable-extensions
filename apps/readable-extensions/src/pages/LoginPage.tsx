@@ -1,8 +1,8 @@
 import React from 'react';
-import LoginCoverImage from '../assets/images/login_cover.svg';
-import Logo from '../components/ui/Logo';
-import TextLogo from '../components/ui/TextLogo';
-import { SocialLoginButton } from '../components/ui/SocialLoginButton';
+import LoginCoverImage from '@extensions/assets/images/login_cover.svg';
+import Logo from '@extensions/components/ui/Logo';
+import TextLogo from '@extensions/components/ui/TextLogo';
+import { SocialLoginButton } from '@extensions/components/ui/SocialLoginButton';
 
 const LoginPage = () => {
   return (

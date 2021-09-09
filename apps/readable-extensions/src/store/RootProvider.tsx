@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useReducer } from 'react';
 import authReducer from './authReducer';
 
 type RootStoreProps = {
-  children: any;
+  children: React.ReactNode;
 };
 
 const AuthContext = React.createContext(null);
 
 export const RootProvider = ({ children }: RootStoreProps) => {
-  const [isAppLoading, setAppLoading] = useState(false);
   const [auth, authDispatch] = useReducer(authReducer, { token: '' });
 
   useEffect(() => {
@@ -19,13 +18,13 @@ export const RootProvider = ({ children }: RootStoreProps) => {
     });
   }, []);
 
-  return <AuthContext.Provider value={{ auth, authDispatch, isAppLoading }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ auth, authDispatch }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthState = () => {
-  const { auth, authDispatch, isAppLoading } = useContext(AuthContext);
+  const { auth, authDispatch } = useContext(AuthContext);
 
   if (!auth) throw new Error('Cannot find RootProvider');
 
-  return { auth, authDispatch, isAppLoading };
+  return { auth, authDispatch };
 };

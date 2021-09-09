@@ -1,6 +1,6 @@
-import { useAuthState } from './store/RootProvider';
-import MainPage from './pages/MainPage';
-import LoginPage from './pages/LoginPage';
+import { useAuthState } from '@extensions/store/RootProvider';
+import MainPage from '@extensions/pages/MainPage';
+import LoginPage from '@extensions/pages/LoginPage';
 
 const App = () => {
   const { auth } = useAuthState();
