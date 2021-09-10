@@ -14,6 +14,8 @@ type Props = {
   body?: any;
 };
 
+// TODO(zlrlo): 한방 쿼리 할 것이기 때문에 곧 사라질 코드
+
 const useFetch = ({ url, method, body }: Props) => {
   const { auth } = useAuthState();
 

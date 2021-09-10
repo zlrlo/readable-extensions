@@ -14,24 +14,17 @@ type UrlInfo = {
 const useCurrentSiteInfo = () => {
   const { auth } = useAuthState();
 
-  const [currentSiteInfo, setCurrentSiteInfo] = useState<UrlInfo>({
-    url: '',
-    siteName: '',
-    type: '',
-    title: '',
-    imageUrl: '',
-    howMany: 0,
-  });
+  const [currentSiteInfo, setCurrentSiteInfo] = useState<UrlInfo | null>(null);
 
-  const [isCurrentSiteInfoLoading, setCurrentSiteInfoLoading] = useState<boolean | null>(null);
+  const [isCurrentSiteInfoLoading, setCurrentSiteInfoLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    setCurrentSiteInfoLoading(true);
+
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const url = tabs[0].url;
 
       (async () => {
-        setCurrentSiteInfoLoading(true);
-
         const rawResponse = await fetch(REST_API.bookmarks.getUrlInfo, {
           method: 'POST',
           headers: {
@@ -55,9 +48,9 @@ const useCurrentSiteInfo = () => {
             url: url ?? '',
             howMany: howMany ?? 0,
           });
-
-          setCurrentSiteInfoLoading(false);
         }
+
+        setCurrentSiteInfoLoading(false);
       })();
     });
   }, [auth.token]);

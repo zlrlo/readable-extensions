@@ -13,7 +13,7 @@ const MainPage = () => {
   const { currentSiteInfo, isCurrentSiteInfoLoading } = useCurrentSiteInfo();
   const { onSubmit } = useSubmit();
 
-  if (isCurrentSiteInfoLoading) {
+  if (!currentSiteInfo || isCurrentSiteInfoLoading) {
     return <LottiePlayer />;
   }
 

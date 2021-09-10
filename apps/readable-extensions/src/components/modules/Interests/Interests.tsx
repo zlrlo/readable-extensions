@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { REST_API } from '@extensions/const/api';
 import useFetch, { UseFetchMethod } from '../common/useFetch';
 import DropdownMenu from '@extensions/components/ui/dropdown-menu';
