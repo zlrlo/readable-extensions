@@ -19,35 +19,35 @@ const useFetch = ({ url, method, body }: Props) => {
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     setLoading(true);
+    (async () => {
+      try {
+        const rawResponse = await fetch(url, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${auth.token}`,
+          },
+          body: JSON.stringify(body),
+        });
+        const serverData = await rawResponse.json();
 
-    fetch(url, {
-      method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${auth.token}`,
-      },
-      body: JSON.stringify(body),
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (myJson) {
-        console.log(JSON.stringify(myJson));
-        setData(myJson);
-        setLoading(false);
-      })
-      .catch(function (error) {
-        setError(true);
-        setLoading(false);
-      });
-  }, [auth.token, body, method, url]);
+        if (serverData.error) {
+          throw `${serverData.error}`;
+        } else {
+          setLoading(false);
+          setData(serverData);
+        }
+      } catch (err) {
+        console.log('TCL: useFetch -> err', err);
+      }
+    })();
+  }, []);
 
-  return { data, loading, error };
+  return { data, loading };
 };
 
 export default useFetch;
