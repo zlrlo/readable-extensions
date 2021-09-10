@@ -4,7 +4,7 @@ import LottiePlayer from '@extensions/components/ui/LottiePlayer';
 import TextAreaAboveImage from '@extensions/components/ui/TextAreaAboveImage';
 import UrlInfo from '@extensions/components/ui/SiteInfo';
 import Interests from '@extensions/components/modules/Interests/Interests';
-import HashTagInput from '@extensions/components/ui/HashTagInput';
+import HashTagInput from '@extensions/components/modules/tags/HashTagInput';
 import config from '@extensions/const/website-config';
 import useSubmit from '@extensions/components/modules/submit/useSubmit';
 import OpenGraphImage from '@extensions/components/ui/OpenGraphImage';
