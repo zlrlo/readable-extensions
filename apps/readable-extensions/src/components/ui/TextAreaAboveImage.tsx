@@ -1,14 +1,11 @@
-import config from '@extensions/website-config';
 import React from 'react';
-import { UrlInfo } from '../templates/MainPage';
 
 type Props = {
-  urlInfo: UrlInfo;
+  type: string;
+  siteName: string;
 };
 
-const TextAreaAboveImage = ({ urlInfo }: Props) => {
-  const { type, siteName } = urlInfo;
-
+const TextAreaAboveImage = ({ type, siteName }: Props) => {
   return (
     <>
       <p className="text-sm font-medium text-white">{type}</p>

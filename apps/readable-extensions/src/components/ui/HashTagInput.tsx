@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Chip from '@extensions/src/components/elements/Chip';
+import Chip from '@extensions/components/ui/Chip';
 import { HashtagIcon, BackspaceIcon } from '@heroicons/react/solid';
 import uuid from 'react-uuid';
 
@@ -20,7 +20,6 @@ const HashTagInput = () => {
 
   const deleteHashTag = hashTagId => {
     const filtered = hashTagList.filter(({ id }) => id !== hashTagId);
-    console.log('TCL: HashTagInput -> filtered', filtered);
     setHashTagList(filtered);
   };
 

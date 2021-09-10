@@ -1,9 +1,10 @@
-import { REST_API } from '@extensions/src/const/api';
-import config from '@extensions/website-config';
-import React, { useState } from 'react';
+import { REST_API } from '@extensions/const/api';
+import { useAuthState } from '@extensions/store/RootProvider';
 
-const Connect = ({ authToken, loaded }) => {
-  const onClick = () => {
+const useSubmit = () => {
+  const { auth } = useAuthState();
+
+  const onSubmit = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const url = tabs[0].url;
 
@@ -13,7 +14,7 @@ const Connect = ({ authToken, loaded }) => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${authToken}`,
+            Authorization: `Bearer ${auth.token}`,
           },
           body: JSON.stringify({ url }),
         })
@@ -39,21 +40,7 @@ const Connect = ({ authToken, loaded }) => {
     });
   };
 
-  return (
-    <div className="flex items-end">
-      <a href={config.siteUrl} target="_blank" className="text-gray-400 hover:text-blue-600" rel="noreferrer">
-        Go to the Readable
-      </a>
-      <button
-        type="button"
-        className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto disabled:opacity-50"
-        onClick={onClick}
-        disabled={!loaded}
-      >
-        Readable it
-      </button>
-    </div>
-  );
+  return { onSubmit };
 };
 
-export default Connect;
+export default useSubmit;

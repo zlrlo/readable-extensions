@@ -1,5 +1,5 @@
-import { authSignin } from '@extensions/src/auth';
-import { API_REST_BASE } from '@extensions/src/const/api';
+import { authSignin } from '@extensions/auth';
+import { API_REST_BASE } from '@extensions/const/api';
 import React from 'react';
 import {
   FacebookLoginButton,

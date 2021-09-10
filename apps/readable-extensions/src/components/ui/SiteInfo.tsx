@@ -1,14 +1,12 @@
 import { BookmarkIcon } from '@heroicons/react/solid';
 import React from 'react';
-import { UrlInfo } from '../../templates/MainPage';
 
 type Props = {
-  urlInfo: UrlInfo;
+  title: string;
+  howMany: number;
 };
 
-const SiteInfo = ({ urlInfo }: Props) => {
-  const { url, siteName, imageUrl, title, howMany } = urlInfo;
-
+const SiteInfo = ({ title, howMany }: Props) => {
   return (
     <div className="flex items-center text-sm font-medium my-5">
       <span className="flex-none">
