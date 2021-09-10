@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import Chip from '@extensions/components/ui/Chip';
 import { HashtagIcon, BackspaceIcon } from '@heroicons/react/solid';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-type HashTagInputProps = {
-  inputControl: any;
-  inputRegister: any;
-};
+const HashTagInput = () => {
+  const { register, control } = useFormContext();
 
-const HashTagInput = ({ inputControl, inputRegister }: HashTagInputProps) => {
   const { fields, append, remove } = useFieldArray({
     name: 'tags',
-    control: inputControl,
+    control,
   });
 
   const [inputText, setInputText] = useState('');
@@ -43,7 +40,7 @@ const HashTagInput = ({ inputControl, inputRegister }: HashTagInputProps) => {
           return (
             <li key={field.id} className="flex mr-2 mb-1">
               <Chip backgroundColor="bg-yellow-200" fontColor="text-black">
-                <input key={field.id} {...inputRegister(`tags.${index}.name` as const)} className="w-0" />
+                <input key={field.id} {...register(`tags.${index}.name` as const)} className="w-0" />
                 <>#{field['name']}</>
               </Chip>
               <button className="ml-1" onClick={() => remove(index)}>

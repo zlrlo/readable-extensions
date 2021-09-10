@@ -8,7 +8,7 @@ import HashTagInput from '@extensions/components/ui/HashTagInput';
 import config from '@extensions/const/website-config';
 import useSubmit from '@extensions/components/modules/submit/useSubmit';
 import OpenGraphImage from '@extensions/components/ui/OpenGraphImage';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 type FormValues = {
   tags: {
@@ -20,17 +20,14 @@ const MainPage = () => {
   const { currentSiteInfo, isCurrentSiteInfoLoading } = useCurrentSiteInfo();
   // const { onSubmit } = useSubmit();
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({
+  const methods = useForm<FormValues>({
     defaultValues: {
-      tags: [{ name: 'test11' }],
+      tags: [],
     },
     mode: 'onBlur',
   });
+
+  const { handleSubmit } = methods;
 
   const onSubmit = data => console.log(data);
 
@@ -51,20 +48,22 @@ const MainPage = () => {
           <UrlInfo title={title} howMany={howMany} />
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
-          <Interests />
-          <HashTagInput inputControl={control} inputRegister={register} />
-          <div className="flex items-end">
-            <a href={config.siteUrl} target="_blank" className="text-gray-400 hover:text-blue-600" rel="noreferrer">
-              Go to the Readable
-            </a>
-            <input
-              type="submit"
-              className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto disabled:opacity-50"
-              value="Readable it"
-            />
-          </div>
-        </form>
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
+            <Interests />
+            <HashTagInput />
+            <div className="flex items-end">
+              <a href={config.siteUrl} target="_blank" className="text-gray-400 hover:text-blue-600" rel="noreferrer">
+                Go to the Readable
+              </a>
+              <input
+                type="submit"
+                className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto disabled:opacity-50"
+                value="Readable it"
+              />
+            </div>
+          </form>
+        </FormProvider>
 
         <div className="relative col-start-1 row-start-1">
           <OpenGraphImage src={imageUrl}></OpenGraphImage>
