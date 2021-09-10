@@ -14,6 +14,12 @@ type FormValues = {
   tags: {
     name: string;
   }[];
+
+  interests: {
+    name: string;
+  }[];
+
+  interest: string;
 };
 
 const MainPage = () => {
@@ -23,6 +29,15 @@ const MainPage = () => {
   const methods = useForm<FormValues>({
     defaultValues: {
       tags: [],
+      interests: [
+        { name: 'Wade Cooper' },
+        { name: 'Arlene Mccoy' },
+        { name: 'Devon Webb' },
+        { name: 'Tom Cook' },
+        { name: 'Tanya Fox' },
+        { name: 'Hellen Schmidt' },
+      ],
+      interest: '',
     },
     mode: 'onBlur',
   });
