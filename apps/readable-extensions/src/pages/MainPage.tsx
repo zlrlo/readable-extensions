@@ -1,12 +1,10 @@
 import React from 'react';
-
 import LottiePlayer from '@extensions/components/ui/LottiePlayer';
 import TextAreaAboveImage from '@extensions/components/ui/TextAreaAboveImage';
 import UrlInfo from '@extensions/components/ui/SiteInfo';
 import Interests from '@extensions/components/modules/Interests/Interests';
 import HashTagInput from '@extensions/components/modules/tags/HashTagInput';
 import config from '@extensions/const/website-config';
-import useSubmit from '@extensions/components/modules/submit/useSubmit';
 import OpenGraphImage from '@extensions/components/ui/OpenGraphImage';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useCurrentSiteInfoState } from '@extensions/store/RootQueryProvider';
@@ -24,8 +22,7 @@ type FormValues = {
 };
 
 const MainPage = () => {
-  const { currentSiteInfo, isCurrentSiteInfoLoading } = useCurrentSiteInfoState();
-  // const { onSubmit } = useSubmit();
+  const { currentSiteInfo, isCurrentSiteInfoLoading, setSaveState } = useCurrentSiteInfoState();
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -44,8 +41,9 @@ const MainPage = () => {
   });
 
   const { handleSubmit } = methods;
-
-  const onSubmit = data => console.log(data);
+  const onSubmit = saveData => {
+    setSaveState(true);
+  };
 
   if (!currentSiteInfo || isCurrentSiteInfoLoading) {
     return <LottiePlayer />;

@@ -23,9 +23,10 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
   const [currentSiteInfo, setCurrentSiteInfo] = useState<UrlInfo | null>(null);
   const [isCurrentSiteInfoLoading, setCurrentSiteInfoLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    setCurrentSiteInfoLoading(true);
+  // TODO(zlrlo): 서버 데이터 맞춘 후 제거 예정
+  const [saveState, setSaveState] = useState(false);
 
+  useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const url = tabs[0].url;
 
@@ -60,15 +61,50 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
     });
   }, [auth.token]);
 
+  useEffect(() => {
+    if (!currentSiteInfo) return;
+    if (!saveState) return;
+
+    (async () => {
+      fetch(REST_API.bookmarks.add, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.token}`,
+        },
+        body: JSON.stringify({ url: currentSiteInfo.url }),
+      })
+        .then(response => {
+          // Unauthorizaed
+          if (response.status === 401) {
+            chrome.storage.local.remove('authToken', function () {
+              const error = chrome.runtime.lastError;
+              if (error) {
+                alert(error.message);
+              } else {
+                alert('Please login again.');
+              }
+            });
+          }
+          // normal case
+          window.close();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    })();
+  }, [auth.token, saveState, currentSiteInfo]);
+
   return (
-    <RootQueryContext.Provider value={{ currentSiteInfo, isCurrentSiteInfoLoading }}>
+    <RootQueryContext.Provider value={{ currentSiteInfo, setCurrentSiteInfo, isCurrentSiteInfoLoading, setSaveState }}>
       {children}
     </RootQueryContext.Provider>
   );
 };
 
 export const useCurrentSiteInfoState = () => {
-  const { currentSiteInfo, isCurrentSiteInfoLoading } = useContext(RootQueryContext);
+  const { currentSiteInfo, setCurrentSiteInfo, isCurrentSiteInfoLoading, setSaveState } = useContext(RootQueryContext);
 
-  return { currentSiteInfo, isCurrentSiteInfoLoading };
+  return { currentSiteInfo, setCurrentSiteInfo, isCurrentSiteInfoLoading, setSaveState };
 };
