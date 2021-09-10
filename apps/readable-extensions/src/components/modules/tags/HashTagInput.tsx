@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import Chip from '@extensions/components/ui/Chip';
 import { HashtagIcon, BackspaceIcon } from '@heroicons/react/solid';
-import uuid from 'react-uuid';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 const HashTagInput = () => {
+  const { register, control } = useFormContext();
+
+  const { fields, append, remove } = useFieldArray({
+    name: 'tags',
+    control,
+  });
+
   const [inputText, setInputText] = useState('');
-  const [hashTagList, setHashTagList] = useState([]);
 
   const handleInputChange = e => {
     setInputText(e.target.value);
   };
 
-  const handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      setHashTagList([...hashTagList, { id: uuid(), hashTag: inputText }]);
-      setInputText('');
-    }
-  };
-
-  const deleteHashTag = hashTagId => {
-    const filtered = hashTagList.filter(({ id }) => id !== hashTagId);
-    setHashTagList(filtered);
+  const handleTagAddButtonClick = () => {
+    append({ name: inputText });
+    setInputText('');
   };
 
   return (
@@ -32,23 +31,19 @@ const HashTagInput = () => {
           placeholder="Focus me"
           value={inputText}
           onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
         />
+        <button onClick={() => handleTagAddButtonClick()}>+</button>
       </div>
 
       <ul className="flex flex-wrap mb-4 text-sm font-medium max-h-32 overflow-y-auto">
-        {hashTagList.map(({ id, hashTag }) => {
+        {fields.map((field, index) => {
           return (
-            <li key={id} className="flex mr-2 mb-1">
+            <li key={field.id} className="flex mr-2 mb-1">
               <Chip backgroundColor="bg-yellow-200" fontColor="text-black">
-                #{hashTag}
+                <input key={field.id} {...register(`tags.${index}.name` as const)} className="w-0" />
+                <>#{field['name']}</>
               </Chip>
-              <button
-                className="ml-1"
-                onClick={() => {
-                  deleteHashTag(id);
-                }}
-              >
+              <button className="ml-1" onClick={() => remove(index)}>
                 <BackspaceIcon className="w-5 h-5 text-gray-300 hover:text-gray-500"></BackspaceIcon>
               </button>
             </li>
