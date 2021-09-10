@@ -38,7 +38,7 @@ const useCurrentSiteInfo = () => {
         const content = await rawResponse.json();
 
         if (content) {
-          const { siteName, title, type, imageUrl, url, howMany } = content;
+          const { siteName, title, type, imageUrl, url, howMany } = content.urlInfo;
 
           setCurrentSiteInfo({
             siteName: siteName ?? '',
