@@ -4,9 +4,10 @@ import { HashtagIcon, BackspaceIcon } from '@heroicons/react/solid';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 const HashTagInput = () => {
-  const { register, control } = useFormContext();
+  const methods = useFormContext();
+  const { register, control } = methods;
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, insert } = useFieldArray({
     name: 'tags',
     control,
   });
@@ -19,7 +20,7 @@ const HashTagInput = () => {
 
   const handleTagAddButtonClick = () => {
     append({ name: inputText });
-    setInputText('');
+    // setInputText('');
   };
 
   return (
@@ -40,7 +41,7 @@ const HashTagInput = () => {
           return (
             <li key={field.id} className="flex mr-2 mb-1">
               <Chip backgroundColor="bg-yellow-200" fontColor="text-black">
-                <input key={field.id} {...register(`tags.${index}.name` as const)} className="w-0" />
+                <input {...register(`tags.${index}.name` as 'tags.0.name')} className="w-0" />
                 <>#{field['name']}</>
               </Chip>
               <button className="ml-1" onClick={() => remove(index)}>

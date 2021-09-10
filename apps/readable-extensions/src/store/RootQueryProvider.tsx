@@ -13,6 +13,8 @@ type UrlInfo = {
   title: string;
   imageUrl: string;
   howMany: number;
+  interests?: { id: string; interest: string }[];
+  tags?: { id: string; tag: string };
 };
 
 const RootQueryContext = React.createContext(null);
@@ -44,7 +46,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
         const content = await rawResponse.json();
 
         if (content) {
-          const { siteName, title, type, imageUrl, url, howMany } = content.urlInfo;
+          const { siteName, title, type, imageUrl, url, howMany, interests, tags } = content;
 
           setCurrentSiteInfo({
             siteName: siteName ?? '',
@@ -53,6 +55,8 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
             imageUrl: imageUrl ?? '',
             url: url ?? '',
             howMany: howMany ?? 0,
+            interests: interests ?? null,
+            tags: tags ?? null,
           });
         }
 

@@ -27,22 +27,15 @@ const MainPage = () => {
   const methods = useForm<FormValues>({
     defaultValues: {
       tags: [],
-      interests: [
-        { name: 'Wade Cooper' },
-        { name: 'Arlene Mccoy' },
-        { name: 'Devon Webb' },
-        { name: 'Tom Cook' },
-        { name: 'Tanya Fox' },
-        { name: 'Hellen Schmidt' },
-      ],
+      interests: [{ name: 'Readable' }],
       interest: '',
     },
-    mode: 'onBlur',
   });
 
   const { handleSubmit } = methods;
   const onSubmit = saveData => {
-    setSaveState(true);
+    console.log('TCL: MainPage -> saveData', saveData);
+    // setSaveState(true);
   };
 
   if (!currentSiteInfo || isCurrentSiteInfoLoading) {

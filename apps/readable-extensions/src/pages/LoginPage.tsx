@@ -7,7 +7,7 @@ import { SocialLoginButton } from '@extensions/components/ui/SocialLoginButton';
 const LoginPage = () => {
   return (
     <div className="flex">
-      <div className="border-2 h-96 w-80">
+      <div className="h-96 w-80">
         <img src={LoginCoverImage} alt="Login" className="object-cover w-full h-full" />
       </div>
       <div className="flex flex-col justify-center px-7">
