@@ -1,6 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useAuthState } from './AuthProvider';
 import { REST_API } from '@extensions/const/api';
-import { useAuthState } from '@extensions/store/AuthProvider';
+
+type AuthProviderProps = {
+  children: React.ReactNode;
+};
 
 type UrlInfo = {
   url: string;
@@ -11,11 +15,12 @@ type UrlInfo = {
   howMany: number;
 };
 
-const useCurrentSiteInfo = () => {
+const RootQueryContext = React.createContext(null);
+
+export const RootQueryProvider = ({ children }: AuthProviderProps) => {
   const { auth } = useAuthState();
 
   const [currentSiteInfo, setCurrentSiteInfo] = useState<UrlInfo | null>(null);
-
   const [isCurrentSiteInfoLoading, setCurrentSiteInfoLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -55,7 +60,15 @@ const useCurrentSiteInfo = () => {
     });
   }, [auth.token]);
 
-  return { currentSiteInfo, isCurrentSiteInfoLoading };
+  return (
+    <RootQueryContext.Provider value={{ currentSiteInfo, isCurrentSiteInfoLoading }}>
+      {children}
+    </RootQueryContext.Provider>
+  );
 };
 
-export default useCurrentSiteInfo;
+export const useCurrentSiteInfoState = () => {
+  const { currentSiteInfo, isCurrentSiteInfoLoading } = useContext(RootQueryContext);
+
+  return { currentSiteInfo, isCurrentSiteInfoLoading };
+};

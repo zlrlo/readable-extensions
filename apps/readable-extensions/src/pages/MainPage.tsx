@@ -1,5 +1,5 @@
 import React from 'react';
-import useCurrentSiteInfo from '@extensions/components/modules/siteInfo/useCurrentSiteInfo';
+
 import LottiePlayer from '@extensions/components/ui/LottiePlayer';
 import TextAreaAboveImage from '@extensions/components/ui/TextAreaAboveImage';
 import UrlInfo from '@extensions/components/ui/SiteInfo';
@@ -9,6 +9,7 @@ import config from '@extensions/const/website-config';
 import useSubmit from '@extensions/components/modules/submit/useSubmit';
 import OpenGraphImage from '@extensions/components/ui/OpenGraphImage';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useCurrentSiteInfoState } from '@extensions/store/RootQueryProvider';
 
 type FormValues = {
   tags: {
@@ -23,7 +24,7 @@ type FormValues = {
 };
 
 const MainPage = () => {
-  const { currentSiteInfo, isCurrentSiteInfoLoading } = useCurrentSiteInfo();
+  const { currentSiteInfo, isCurrentSiteInfoLoading } = useCurrentSiteInfoState();
   // const { onSubmit } = useSubmit();
 
   const methods = useForm<FormValues>({
