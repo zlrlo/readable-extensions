@@ -1,4 +1,4 @@
-import { useAuthState } from '@extensions/store/RootProvider';
+import { useAuthState } from '@extensions/store/AuthProvider';
 import MainPage from '@extensions/pages/MainPage';
 import LoginPage from '@extensions/pages/LoginPage';
 

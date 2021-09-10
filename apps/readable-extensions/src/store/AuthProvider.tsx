@@ -2,13 +2,13 @@ import React, { useContext, useEffect } from 'react';
 import { useReducer } from 'react';
 import authReducer from './authReducer';
 
-type RootStoreProps = {
+type AuthProviderProps = {
   children: React.ReactNode;
 };
 
 const AuthContext = React.createContext(null);
 
-export const RootProvider = ({ children }: RootStoreProps) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [auth, authDispatch] = useReducer(authReducer, { token: '' });
 
   useEffect(() => {

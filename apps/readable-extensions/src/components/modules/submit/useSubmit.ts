@@ -1,5 +1,5 @@
 import { REST_API } from '@extensions/const/api';
-import { useAuthState } from '@extensions/store/RootProvider';
+import { useAuthState } from '@extensions/store/AuthProvider';
 
 const useSubmit = () => {
   const { auth } = useAuthState();

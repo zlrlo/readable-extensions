@@ -1,4 +1,4 @@
-import { useAuthState } from '@extensions/store/RootProvider';
+import { useAuthState } from '@extensions/store/AuthProvider';
 import { useEffect, useState } from 'react';
 
 export enum UseFetchMethod {
