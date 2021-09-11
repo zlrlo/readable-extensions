@@ -32,8 +32,9 @@ const MainPage = () => {
     },
   });
 
-  const { handleSubmit } = methods;
-  const onSubmit = saveData => {
+  const { handleSubmit, getValues } = methods;
+  const onSubmit = () => {
+    const saveData = getValues();
     console.log('TCL: MainPage -> saveData', saveData);
     // setSaveState(true);
   };
@@ -56,7 +57,7 @@ const MainPage = () => {
         </div>
 
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)} className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
+          <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
             <Interests />
             <HashTagInput />
             <div className="flex items-end">
@@ -64,12 +65,13 @@ const MainPage = () => {
                 Go to the Readable
               </a>
               <input
-                type="submit"
+                type="button"
+                onClick={() => onSubmit()}
                 className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto disabled:opacity-50"
                 value="Readable it"
               />
             </div>
-          </form>
+          </div>
         </FormProvider>
 
         <div className="relative col-start-1 row-start-1">

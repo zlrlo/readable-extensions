@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chip from '@extensions/components/ui/Chip';
 import { HashtagIcon, BackspaceIcon } from '@heroicons/react/solid';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useForm, useFormContext } from 'react-hook-form';
 
 const HashTagInput = () => {
   const methods = useFormContext();
@@ -12,28 +12,33 @@ const HashTagInput = () => {
     control,
   });
 
-  const [inputText, setInputText] = useState('');
+  const tagInputRef = useRef(null);
 
-  const handleInputChange = e => {
-    setInputText(e.target.value);
+  const handleTagAddButtonClick = e => {
+    const inputTagValue = tagInputRef.current.value;
+
+    if (e.key === 'Enter' && inputTagValue) {
+      append({ name: inputTagValue });
+    }
   };
 
-  const handleTagAddButtonClick = () => {
-    append({ name: inputText });
-    // setInputText('');
-  };
+  useEffect(() => {
+    const inputTag = tagInputRef.current;
+    inputTag.focus();
+    inputTag.value = '';
+  }, [fields]);
 
   return (
     <>
       <div className="flex items-center text-gray-400 focus-within:text-gray-600">
         <HashtagIcon className="flex-none w-5 h-5"></HashtagIcon>
         <input
+          ref={tagInputRef}
           className="border-b w-full focus:outline-none p-2"
           placeholder="Focus me"
-          value={inputText}
-          onChange={handleInputChange}
+          onKeyPress={handleTagAddButtonClick}
         />
-        <button onClick={() => handleTagAddButtonClick()}>+</button>
+        <button type="button">+</button>
       </div>
 
       <ul className="flex flex-wrap mb-4 text-sm font-medium max-h-32 overflow-y-auto">
@@ -44,7 +49,7 @@ const HashTagInput = () => {
                 <input {...register(`tags.${index}.name` as 'tags.0.name')} className="w-0" />
                 <>#{field['name']}</>
               </Chip>
-              <button className="ml-1" onClick={() => remove(index)}>
+              <button type="button" className="ml-1" onClick={() => remove(index)}>
                 <BackspaceIcon className="w-5 h-5 text-gray-300 hover:text-gray-500"></BackspaceIcon>
               </button>
             </li>
