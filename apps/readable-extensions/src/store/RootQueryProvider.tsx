@@ -6,15 +6,30 @@ type AuthProviderProps = {
   children: React.ReactNode;
 };
 
-type UrlInfo = {
+type UrlData = {
   url: string;
   siteName: string;
   type: string;
   title: string;
   imageUrl: string;
   howMany: number;
-  interests?: { id: string; interest: string }[];
-  tags?: { id: string; tag: string };
+};
+
+type UserData = {
+  interests?: {
+    createdAt: string;
+    deletedAt: string;
+    id: string;
+    interest: string;
+    updatedAt: string;
+    userId: string;
+  }[];
+  tags?: string[];
+};
+
+type FormData = {
+  interest: string;
+  tags: { name: string }[];
 };
 
 const RootQueryContext = React.createContext(null);
@@ -22,11 +37,10 @@ const RootQueryContext = React.createContext(null);
 export const RootQueryProvider = ({ children }: AuthProviderProps) => {
   const { auth } = useAuthState();
 
-  const [currentSiteInfo, setCurrentSiteInfo] = useState<UrlInfo | null>(null);
-  const [isCurrentSiteInfoLoading, setCurrentSiteInfoLoading] = useState<boolean>(false);
-
-  // TODO(zlrlo): 서버 데이터 맞춘 후 제거 예정
-  const [saveState, setSaveState] = useState(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [currentUrlData, setCurrenUrlData] = useState<UrlData>();
+  const [userData, setUserData] = useState<UserData>();
+  const [formData, setFormData] = useState<FormData>();
 
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -44,30 +58,39 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
         });
 
         const content = await rawResponse.json();
+        console.log('TCL: RootQueryProvider -> content', content);
+
+        if (content.statusCode === 500) {
+          alert(content.message);
+        }
 
         if (content) {
-          const { siteName, title, type, imageUrl, url, howMany, interests, tags } = content;
+          const { urlInfo, interests, tags } = content;
 
-          setCurrentSiteInfo({
+          const { siteName, title, type, imageUrl, url, howMany } = urlInfo;
+
+          setCurrenUrlData({
             siteName: siteName ?? '',
             title: title ?? '',
             type: type ?? '',
             imageUrl: imageUrl ?? '',
             url: url ?? '',
             howMany: howMany ?? 0,
-            interests: interests ?? null,
-            tags: tags ?? null,
+          });
+
+          setUserData({
+            interests: interests ?? [],
+            tags: tags ?? [],
           });
         }
 
-        setCurrentSiteInfoLoading(false);
+        setLoading(false);
       })();
     });
   }, [auth.token]);
 
   useEffect(() => {
-    if (!currentSiteInfo) return;
-    if (!saveState) return;
+    if (!formData || !currentUrlData) return;
 
     (async () => {
       fetch(REST_API.bookmarks.add, {
@@ -77,7 +100,11 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${auth.token}`,
         },
-        body: JSON.stringify({ url: currentSiteInfo.url }),
+        body: JSON.stringify({
+          url: currentUrlData.url,
+          interest: formData.interest,
+          tags: formData.tags.map(({ name }) => name),
+        }),
       })
         .then(response => {
           // Unauthorizaed
@@ -92,23 +119,24 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
             });
           }
           // normal case
-          window.close();
+          // window.close();
+          console.log('TCL: response', response);
         })
         .catch(error => {
           console.log(error);
         });
     })();
-  }, [auth.token, saveState, currentSiteInfo]);
+  }, [formData, auth.token, currentUrlData]);
 
   return (
-    <RootQueryContext.Provider value={{ currentSiteInfo, setCurrentSiteInfo, isCurrentSiteInfoLoading, setSaveState }}>
+    <RootQueryContext.Provider value={{ currentUrlData, isLoading, userData, setFormData }}>
       {children}
     </RootQueryContext.Provider>
   );
 };
 
 export const useCurrentSiteInfoState = () => {
-  const { currentSiteInfo, setCurrentSiteInfo, isCurrentSiteInfoLoading, setSaveState } = useContext(RootQueryContext);
+  const { currentUrlData, isLoading, userData, setFormData } = useContext(RootQueryContext);
 
-  return { currentSiteInfo, setCurrentSiteInfo, isCurrentSiteInfoLoading, setSaveState };
+  return { currentUrlData, isLoading, userData, setFormData };
 };
