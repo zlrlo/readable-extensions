@@ -46,7 +46,8 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
         const content = await rawResponse.json();
 
         if (content) {
-          const { siteName, title, type, imageUrl, url, howMany, interests, tags } = content;
+          const { urlInfo, interests, tags } = content;
+          const { siteName, title, type, imageUrl, url, howMany } = urlInfo;
 
           setCurrentSiteInfo({
             siteName: siteName ?? '',
