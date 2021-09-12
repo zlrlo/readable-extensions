@@ -22,7 +22,7 @@ type FormValues = {
 };
 
 const MainPage = () => {
-  const { currentSiteInfo, isCurrentSiteInfoLoading, setSaveState } = useCurrentSiteInfoState();
+  const { currentUrlData, isLoading, userData, setFormData } = useCurrentSiteInfoState();
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -32,18 +32,18 @@ const MainPage = () => {
     },
   });
 
-  const { handleSubmit, getValues } = methods;
+  const { getValues } = methods;
+
   const onSubmit = () => {
-    const saveData = getValues();
-    console.log('TCL: MainPage -> saveData', saveData);
-    // setSaveState(true);
+    const { tags, interest } = getValues();
+    setFormData({ tags, interest });
   };
 
-  if (!currentSiteInfo || isCurrentSiteInfoLoading) {
+  if (!currentUrlData || isLoading) {
     return <LottiePlayer />;
   }
 
-  const { type, siteName, title, howMany, imageUrl } = currentSiteInfo;
+  const { type, siteName, title, howMany, imageUrl } = currentUrlData;
 
   return (
     <div className="grid grid-cols-1 w-80">
