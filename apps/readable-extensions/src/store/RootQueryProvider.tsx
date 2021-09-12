@@ -32,7 +32,14 @@ type FormData = {
   tags: { name: string }[];
 };
 
-const RootQueryContext = React.createContext(null);
+type RootQueryType = {
+  currentUrlData: UrlData;
+  isLoading: boolean;
+  userData: UserData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+};
+
+const RootQueryContext = React.createContext<RootQueryType>(null);
 
 export const RootQueryProvider = ({ children }: AuthProviderProps) => {
   const { auth } = useAuthState();
@@ -136,7 +143,5 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
 };
 
 export const useCurrentSiteInfoState = () => {
-  const { currentUrlData, isLoading, userData, setFormData } = useContext(RootQueryContext);
-
-  return { currentUrlData, isLoading, userData, setFormData };
+  return useContext(RootQueryContext);
 };
