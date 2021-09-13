@@ -54,7 +54,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
       const url = tabs[0].url;
 
       (async () => {
-        const rawResponse = await fetch(REST_API.bookmarks.getUrlInfo, {
+        const rawResponse = await fetch(REST_API.urlInfo.get, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -72,9 +72,9 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
         }
 
         if (content) {
-          const { urlInfo, interests, tags } = content;
+          // const { urlInfo, interests, tags } = content;
 
-          const { siteName, title, type, imageUrl, url, howMany } = urlInfo;
+          const { siteName, title, type, imageUrl, url, howMany } = content;
 
           setCurrenUrlData({
             siteName: siteName ?? '',
