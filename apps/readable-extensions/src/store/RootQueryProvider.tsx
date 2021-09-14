@@ -101,7 +101,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
     if (!formData || !currentUrlData) return;
 
     (async () => {
-      fetch(REST_API.bookmarks.add, {
+      fetch(REST_API.userBookmark.add, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
