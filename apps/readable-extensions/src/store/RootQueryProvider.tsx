@@ -127,7 +127,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
             });
           }
           // normal case
-          // window.close();
+          window.close();
           console.log('TCL: response', response);
         })
         .catch(error => {
