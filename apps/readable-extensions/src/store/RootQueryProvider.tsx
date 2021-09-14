@@ -72,9 +72,10 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
         }
 
         if (content) {
-          // const { urlInfo, interests, tags } = content;
+          const { urlInfo, userBookmark } = content;
 
-          const { siteName, title, type, imageUrl, url, howMany } = content;
+          const { siteName, title, type, imageUrl, url, howMany } = urlInfo;
+          const { interests, tags } = userBookmark ?? { interests: [], tags: [] };
 
           setCurrenUrlData({
             siteName: siteName ?? '',

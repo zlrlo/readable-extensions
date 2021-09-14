@@ -9,6 +9,9 @@ export const REST_API = {
   urlInfo: {
     get: `${API_REST_BASE}/url-info`,
   },
+  userBookmark: {
+    add: `${API_REST_BASE}/user-bookmark`,
+  },
   bookmarks: {
     add: `${API_REST_BASE}/bookmarks/add`,
     getUrlInfo: `${API_REST_BASE}/bookmarks`,
