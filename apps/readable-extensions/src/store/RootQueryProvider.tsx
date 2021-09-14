@@ -54,7 +54,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
       const url = tabs[0].url;
 
       (async () => {
-        const rawResponse = await fetch(REST_API.bookmarks.getUrlInfo, {
+        const rawResponse = await fetch(REST_API.urlInfo.get, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -72,9 +72,10 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
         }
 
         if (content) {
-          const { urlInfo, interests, tags } = content;
+          const { urlInfo, userBookmark, interests } = content;
 
           const { siteName, title, type, imageUrl, url, howMany } = urlInfo;
+          const { interest, tags = [] } = userBookmark ?? { interest: null, tags: [] };
 
           setCurrenUrlData({
             siteName: siteName ?? '',
@@ -100,7 +101,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
     if (!formData || !currentUrlData) return;
 
     (async () => {
-      fetch(REST_API.bookmarks.add, {
+      fetch(REST_API.userBookmark.add, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -126,7 +127,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
             });
           }
           // normal case
-          // window.close();
+          window.close();
           console.log('TCL: response', response);
         })
         .catch(error => {
