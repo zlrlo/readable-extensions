@@ -2,44 +2,14 @@ import React from 'react';
 import LottiePlayer from '@extensions/components/ui/LottiePlayer';
 import TextAreaAboveImage from '@extensions/components/ui/TextAreaAboveImage';
 import UrlInfo from '@extensions/components/ui/SiteInfo';
-import Interests from '@extensions/components/modules/Interests/Interests';
-import HashTagInput from '@extensions/components/modules/tags/HashTagInput';
-import config from '@extensions/const/website-config';
 import OpenGraphImage from '@extensions/components/ui/OpenGraphImage';
-import { FormProvider, useForm } from 'react-hook-form';
 import { useCurrentSiteInfoState } from '@extensions/store/RootQueryProvider';
-
-type FormValues = {
-  tags: {
-    name: string;
-  }[];
-
-  interests: {
-    name: string;
-  }[];
-
-  interest: string;
-};
+import Form from '@extensions/components/modules/form/Form';
 
 const MainPage = () => {
-  const { currentUrlData, isLoading, userData, setFormData } = useCurrentSiteInfoState();
+  const { currentUrlData, isLoading, userData, submitData } = useCurrentSiteInfoState();
 
-  const methods = useForm<FormValues>({
-    defaultValues: {
-      tags: [],
-      interests: [{ name: 'Readable' }],
-      interest: '',
-    },
-  });
-
-  const { getValues } = methods;
-
-  const onSubmit = () => {
-    const { tags, interest } = getValues();
-    setFormData({ tags, interest });
-  };
-
-  if (!currentUrlData || isLoading) {
+  if (!currentUrlData || !userData || isLoading) {
     return <LottiePlayer />;
   }
 
@@ -56,23 +26,7 @@ const MainPage = () => {
           <UrlInfo title={title} howMany={howMany} />
         </div>
 
-        <FormProvider {...methods}>
-          <div className="col-start-1 row-start-3 space-y-3 px-4 pb-4">
-            <Interests />
-            <HashTagInput />
-            <div className="flex items-end">
-              <a href={config.siteUrl} target="_blank" className="text-gray-400 hover:text-blue-600" rel="noreferrer">
-                Go to the Readable
-              </a>
-              <input
-                type="button"
-                onClick={() => onSubmit()}
-                className="bg-indigo-100 text-indigo-700 text-base font-semibold px-6 py-2 rounded-lg ml-auto disabled:opacity-50"
-                value="Readable it"
-              />
-            </div>
-          </div>
-        </FormProvider>
+        <Form userData={userData} submitData={submitData} />
 
         <div className="relative col-start-1 row-start-1">
           <OpenGraphImage src={imageUrl}></OpenGraphImage>

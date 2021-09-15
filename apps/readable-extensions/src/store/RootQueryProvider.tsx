@@ -16,15 +16,9 @@ type UrlData = {
 };
 
 type UserData = {
-  interests?: {
-    createdAt: string;
-    deletedAt: string;
-    id: string;
-    interest: string;
-    updatedAt: string;
-    userId: string;
-  }[];
-  tags?: string[];
+  interests?: { id: string; name: string }[];
+  selectedInterest?: string;
+  tags?: { id: string; name: string }[];
 };
 
 type FormData = {
@@ -36,7 +30,7 @@ type RootQueryType = {
   currentUrlData: UrlData;
   isLoading: boolean;
   userData: UserData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  submitData: (data: FormData) => void;
 };
 
 const RootQueryContext = React.createContext<RootQueryType>(null);
@@ -48,6 +42,10 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
   const [currentUrlData, setCurrenUrlData] = useState<UrlData>();
   const [userData, setUserData] = useState<UserData>();
   const [formData, setFormData] = useState<FormData>();
+
+  const submitData = (data: FormData) => {
+    setFormData(data);
+  };
 
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -69,26 +67,34 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
 
         if (content.statusCode === 500) {
           alert(content.message);
+          window.close();
+          return;
         }
 
         if (content) {
-          const { urlInfo, userBookmark, interests } = content;
+          const { urlInfo, userBookmark, interests, latestInterest } = content;
 
-          const { siteName, title, type, imageUrl, url, howMany } = urlInfo;
-          const { interest, tags = [] } = userBookmark ?? { interest: null, tags: [] };
+          const tagData = userBookmark?.tags.map(({ id, tag }) => {
+            return { id, name: tag };
+          });
+
+          const interestData = interests?.map(({ id, interest }) => {
+            return { id, name: interest };
+          });
 
           setCurrenUrlData({
-            siteName: siteName ?? '',
-            title: title ?? '',
-            type: type ?? '',
-            imageUrl: imageUrl ?? '',
-            url: url ?? '',
-            howMany: howMany ?? 0,
+            siteName: urlInfo?.siteName ?? '',
+            title: urlInfo?.title ?? '',
+            type: urlInfo?.type ?? '',
+            imageUrl: urlInfo?.imageUrl ?? '',
+            url: urlInfo.url ?? '',
+            howMany: urlInfo.howMany ?? 0,
           });
 
           setUserData({
-            interests: interests ?? [],
-            tags: tags ?? [],
+            interests: interestData ?? [],
+            selectedInterest: userBookmark?.interest.interest,
+            tags: tagData ?? [],
           });
         }
 
@@ -127,8 +133,8 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
             });
           }
           // normal case
+          alert('It has been successfully saved');
           window.close();
-          console.log('TCL: response', response);
         })
         .catch(error => {
           console.log(error);
@@ -137,7 +143,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
   }, [formData, auth.token, currentUrlData]);
 
   return (
-    <RootQueryContext.Provider value={{ currentUrlData, isLoading, userData, setFormData }}>
+    <RootQueryContext.Provider value={{ currentUrlData, isLoading, userData, submitData }}>
       {children}
     </RootQueryContext.Provider>
   );
