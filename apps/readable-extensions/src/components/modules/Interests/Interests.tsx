@@ -1,17 +1,18 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 const Interests = () => {
-  const { register, control, setValue } = useFormContext();
+  const { register, control, setValue, watch, getValues } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
     name: 'interests',
     control,
   });
 
-  const [selected, setSelected] = useState({ name: fields[0]['name'] });
+  const { selectedInterest } = useMemo(() => getValues(), [getValues]);
+  const [selected, setSelected] = useState({ name: selectedInterest });
 
   const interestInput = useRef(null);
 
@@ -23,8 +24,8 @@ const Interests = () => {
   };
 
   useEffect(() => {
-    setValue('interest', selected.name);
-  }, [setValue, selected]);
+    setValue('selectedInterest', selected.name);
+  }, [selected.name, setValue]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -58,12 +59,13 @@ const Interests = () => {
                   key={field.id}
                   className={({ active }) =>
                     `${active ? 'text-indigo-900 bg-indigo-100' : 'text-gray-900'}
-                      cursor-default select-none relative py-2 pl-10 pr-4`
+                    cursor-default select-none relative py-2 pl-10 pr-4`
                   }
                   value={{ name: field['name'] }}
                 >
                   {({ selected, active }) => (
                     <>
+                      <input {...register(`interests.${index}.name` as 'interests.0.name')} className="hidden" />
                       <span className={`${selected ? 'font-medium' : 'font-normal'} block truncate`}>
                         {field['name']}
                       </span>

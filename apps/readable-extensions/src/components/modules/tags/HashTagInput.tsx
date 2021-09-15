@@ -38,7 +38,6 @@ const HashTagInput = () => {
           placeholder="Focus me"
           onKeyPress={handleTagAddButtonClick}
         />
-        <button type="button">+</button>
       </div>
 
       <ul className="flex flex-wrap mb-4 text-sm font-medium max-h-32 overflow-y-auto">
