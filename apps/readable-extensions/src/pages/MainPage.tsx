@@ -5,9 +5,14 @@ import UrlInfo from '@extensions/components/ui/SiteInfo';
 import OpenGraphImage from '@extensions/components/ui/OpenGraphImage';
 import { useCurrentSiteInfoState } from '@extensions/store/RootQueryProvider';
 import Form from '@extensions/components/modules/form/Form';
+import Recommendations from '@extensions/components/ui/Recommendations';
 
 const MainPage = () => {
-  const { currentUrlData, isLoading, userData, submitData } = useCurrentSiteInfoState();
+  const { currentUrlData, isLoading, userData, submitData, recommendationsData } = useCurrentSiteInfoState();
+
+  if (recommendationsData?.length > 0) {
+    return <Recommendations recommendationsData={recommendationsData} />;
+  }
 
   if (!currentUrlData || !userData || isLoading) {
     return <LottiePlayer />;
