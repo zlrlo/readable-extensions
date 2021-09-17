@@ -149,13 +149,13 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
           return response.json();
         })
         .then(json => {
-          const { recommendations, userBookmark } = json;
+          const { recommendations = [], userBookmark } = json;
 
           if (recommendations?.length === 0) {
             window.close();
           }
 
-          setRecommendationsData(recommendations ?? []);
+          setRecommendationsData(recommendations);
 
           // normal case
           alert('It has been successfully saved');
