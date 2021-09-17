@@ -26,10 +26,23 @@ type FormData = {
   tags: { name: string }[];
 };
 
+type RecommendationUrlData = Omit<UrlData, 'howMany'>;
+type RecommendationUserBookmarkData = {
+  id: string;
+  urlHash: string;
+  urlInfo: RecommendationUrlData;
+};
+
+export type RecommendationData = {
+  tag: string;
+  recommendedUserBookmarks: RecommendationUserBookmarkData[];
+};
+
 type RootQueryType = {
   currentUrlData: UrlData;
   isLoading: boolean;
   userData: UserData;
+  recommendationsData: RecommendationData[];
   submitData: (data: FormData) => void;
 };
 
@@ -42,6 +55,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
   const [currentUrlData, setCurrenUrlData] = useState<UrlData>();
   const [userData, setUserData] = useState<UserData>();
   const [formData, setFormData] = useState<FormData>();
+  const [recommendationsData, setRecommendationsData] = useState<RecommendationData[]>([]);
 
   const submitData = (data: FormData) => {
     setFormData(data);
@@ -132,9 +146,19 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
               }
             });
           }
+          return response.json();
+        })
+        .then(json => {
+          const { recommendations = [], userBookmark } = json;
+
+          if (recommendations?.length === 0) {
+            window.close();
+          }
+
+          setRecommendationsData(recommendations);
+
           // normal case
           alert('It has been successfully saved');
-          window.close();
         })
         .catch(error => {
           console.log(error);
@@ -143,7 +167,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
   }, [formData, auth.token, currentUrlData]);
 
   return (
-    <RootQueryContext.Provider value={{ currentUrlData, isLoading, userData, submitData }}>
+    <RootQueryContext.Provider value={{ currentUrlData, isLoading, userData, submitData, recommendationsData }}>
       {children}
     </RootQueryContext.Provider>
   );
