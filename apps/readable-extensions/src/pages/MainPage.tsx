@@ -8,13 +8,13 @@ import Form from '@extensions/components/modules/form/Form';
 import Recommendations from '@extensions/components/ui/Recommendations';
 
 const MainPage = () => {
-  const { currentUrlData, isLoading, userData, submitData, recommendationsData } = useCurrentSiteInfoState();
+  const { currentUrlData, isServerDataLoading, userData, submitData, recommendationsData } = useCurrentSiteInfoState();
 
   if (recommendationsData?.length > 0) {
     return <Recommendations recommendationsData={recommendationsData} />;
   }
 
-  if (!currentUrlData || !userData || isLoading) {
+  if (!currentUrlData || !userData || isServerDataLoading) {
     return <LottiePlayer />;
   }
 
