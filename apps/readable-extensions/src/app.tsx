@@ -4,18 +4,22 @@ import LoginPage from '@extensions/pages/LoginPage';
 import { RootQueryProvider } from './store/RootQueryProvider';
 
 const App = () => {
-  const { auth } = useAuthState();
+  const { auth, isLoading } = useAuthState();
 
-  if (auth.token) {
-    console.log(`🛂 loadAuthToken = ${auth.token}`);
-    return (
-      <RootQueryProvider>
-        <MainPage />
-      </RootQueryProvider>
-    );
+  if (isLoading) {
+    return <div>loading...</div>;
   }
 
-  return <LoginPage />;
+  if (!auth.token) {
+    return <LoginPage />;
+  }
+
+  console.log(`🛂 loadAuthToken = ${auth.token}`);
+  return (
+    <RootQueryProvider>
+      <MainPage />
+    </RootQueryProvider>
+  );
 };
 
 export default App;
