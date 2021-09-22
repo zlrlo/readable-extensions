@@ -50,7 +50,6 @@ type RootQueryType = {
 const RootQueryContext = React.createContext<RootQueryType>(null);
 
 export const RootQueryProvider = ({ children }: AuthProviderProps) => {
-  const { auth } = useAuthState();
   const [url, setUrl] = useState<string>();
   const [formData, setFormData] = useState<FormData>();
   const [recommendationsData, setRecommendationsData] = useState<RecommendationData[]>([]);
@@ -61,7 +60,7 @@ export const RootQueryProvider = ({ children }: AuthProviderProps) => {
       if (!url) return;
       setUrl(url);
     });
-  }, [auth.token]);
+  }, []);
 
   const { isLoading: isServerDataLoading, responseData: serverData } = useFetch({
     variables: { api: REST_API.urlInfo.get, data: { url } },
