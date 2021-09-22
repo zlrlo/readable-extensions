@@ -1,30 +1,34 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useReducer } from 'react';
-import authReducer from './authReducer';
+import authReducer, { AuthState } from './authReducer';
 
 type AuthProviderProps = {
   children: React.ReactNode;
 };
 
-const AuthContext = React.createContext(null);
+type AuthContextType = {
+  auth: AuthState;
+  isLoading: boolean;
+};
+
+const AuthContext = React.createContext<AuthContextType>(null);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [auth, authDispatch] = useReducer(authReducer, { token: '' });
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     chrome.storage.local.get('authToken', function (data) {
-      const { authToken } = data;
-      authDispatch({ type: 'LOGIN', token: authToken });
+      if (data.authToken) {
+        authDispatch({ type: 'LOGIN', token: data.authToken });
+      }
+      setLoading(false);
     });
   }, []);
 
-  return <AuthContext.Provider value={{ auth, authDispatch }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ auth, isLoading }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthState = () => {
-  const { auth, authDispatch } = useContext(AuthContext);
-
-  if (!auth) throw new Error('Cannot find RootProvider');
-
-  return { auth, authDispatch };
+  return useContext(AuthContext);
 };
