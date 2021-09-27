@@ -1,4 +1,4 @@
-import { API_REST_BASE } from './const/api';
+import { REST_API_BASE } from './const/api';
 
 export const authSignin = () => {
   chrome.identity.getAuthToken(
@@ -15,7 +15,7 @@ export const authSignin = () => {
         .then(response => response.json())
         .then(response => {
           (async () => {
-            const rawResponse = await fetch(`${API_REST_BASE}/auth/signin`, {
+            const rawResponse = await fetch(`${REST_API_BASE}/auth/signin`, {
               method: 'POST',
               headers: {
                 Accept: 'application/json',
