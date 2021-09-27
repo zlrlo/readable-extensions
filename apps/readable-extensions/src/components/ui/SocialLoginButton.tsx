@@ -1,5 +1,5 @@
 import { authSignin } from '@extensions/auth';
-import { API_REST_BASE } from '@extensions/const/api';
+import { REST_API_BASE } from '@extensions/const/api';
 import React from 'react';
 import {
   FacebookLoginButton,
@@ -19,7 +19,7 @@ export function SocialLoginButton({ provider }: Props) {
 
   if (provider === 'facebook') {
     return (
-      <a href={`${API_REST_BASE}/auth/extension-facebook`} target="_blank" rel="noreferrer">
+      <a href={`${REST_API_BASE}/auth/extension-facebook`} target="_blank" rel="noreferrer">
         <FacebookLoginButton />
       </a>
     );
@@ -27,7 +27,7 @@ export function SocialLoginButton({ provider }: Props) {
 
   if (provider === 'github') {
     return (
-      <a href={`${API_REST_BASE}/auth/extension-github`} target="_blank" rel="noreferrer">
+      <a href={`${REST_API_BASE}/auth/extension-github`} target="_blank" rel="noreferrer">
         <GithubLoginButton />
       </a>
     );

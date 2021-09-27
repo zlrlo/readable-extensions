@@ -2,8 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import Chip from '@extensions/components/ui/Chip';
 import { HashtagIcon, BackspaceIcon } from '@heroicons/react/solid';
 import { useFieldArray, useForm, useFormContext } from 'react-hook-form';
+import { REST_API } from '@extensions/const/api';
+import { useAuthState } from '@extensions/store/AuthProvider';
 
 const HashTagInput = () => {
+  const { auth } = useAuthState();
+
   const methods = useFormContext();
   const { register, control } = methods;
 
@@ -13,6 +17,27 @@ const HashTagInput = () => {
   });
 
   const tagInputRef = useRef(null);
+
+  const handleChange = async e => {
+    const inputTagValue = tagInputRef.current.value;
+
+    const rawResponse = await fetch(REST_API.search['tag-suggest'], {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth.token}`,
+      },
+      body: JSON.stringify({ query: inputTagValue }),
+    });
+    const response = await rawResponse.json();
+
+    if (response && response.length > 0) {
+      for (const tag of response) {
+        append({ name: tag.tag });
+      }
+    }
+  };
 
   const handleTagAddButtonClick = e => {
     const inputTagValue = tagInputRef.current.value;
@@ -37,6 +62,7 @@ const HashTagInput = () => {
           className="border-b w-full focus:outline-none p-2"
           placeholder="Focus me"
           onKeyPress={handleTagAddButtonClick}
+          onChange={handleChange}
         />
       </div>
 
